@@ -1,1025 +1,1572 @@
 <!DOCTYPE html>
 <html lang="en-GB">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>FurAway™ — Post-Purchase Sequence</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>FurAway™ — Finally, a Pet-Hair-Free Home</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
 <style>
-:root {
-  --ink:        #1a1a1a;
-  --smoke:      #f7f6f3;
-  --white:      #fff;
-  --sage:       #3d6b55;
-  --sage-light: #eef4f0;
-  --sage-mid:   #5a8c70;
-  --amber:      #c2813b;
-  --amber-dark: #a86e2f;
-  --mist:       #e8e6e1;
-  --soft:       #5a5a5a;
-  --gold:       #d4a843;
-  --font-disp:  'Playfair Display', Georgia, serif;
-  --font-body:  'Inter', system-ui, sans-serif;
-  --radius:     12px;
-  --radius-lg:  20px;
-  --shadow:     0 4px 24px rgba(0,0,0,0.08);
-  --shadow-lg:  0 12px 48px rgba(0,0,0,0.14);
-}
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: var(--font-body); background: #dedad4; color: var(--ink); -webkit-font-smoothing: antialiased; }
+  /* ─── TOKENS ─────────────────────────────────────────────── */
+  :root {
+    --ink:       #1a1a1a;
+    --smoke:     #f7f6f3;
+    --white:     #ffffff;
+    --sage:      #3d6b55;
+    --sage-light:#eef4f0;
+    --sage-mid:  #5a8c70;
+    --amber:     #c2813b;
+    --mist:      #e8e6e1;
+    --text-soft: #5a5a5a;
+    --radius:    12px;
+    --radius-lg: 20px;
+    --font-disp: 'Playfair Display', Georgia, serif;
+    --font-body: 'Inter', system-ui, sans-serif;
+    --shadow:    0 4px 24px rgba(0,0,0,0.08);
+    --shadow-lg: 0 12px 48px rgba(0,0,0,0.12);
+  }
 
-/* PAGE */
-.page { max-width: 980px; margin: 0 auto; padding: 0 16px 80px; }
+  /* ─── RESET ──────────────────────────────────────────────── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: var(--font-body);
+    color: var(--ink);
+    background: var(--white);
+    line-height: 1.65;
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+  }
+  img { max-width: 100%; display: block; }
+  a { color: inherit; text-decoration: none; }
 
-/* HEADER */
-.page-header {
-  background: var(--sage);
-  padding: 28px 32px;
-  margin-bottom: 32px;
-  border-radius: 0 0 var(--radius) var(--radius);
-}
-.page-header h1 { font-family: var(--font-disp); font-size: 22px; font-weight: 900; color: #fff; margin-bottom: 4px; }
-.page-header h1 em { color: #a8dfbe; font-style: normal; }
-.page-header p { font-size: 13px; color: rgba(255,255,255,0.6); }
+  /* ─── UTILITY ────────────────────────────────────────────── */
+  .container { width: 100%; max-width: 680px; margin: 0 auto; padding: 0 20px; }
+  .container--wide { max-width: 900px; }
 
-/* SECTION LABEL */
-.section-label {
-  font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
-  color: var(--soft); margin: 40px 0 16px;
-  display: flex; align-items: center; gap: 10px;
-}
-.section-label::after { content: ''; flex: 1; height: 1px; background: var(--mist); }
+  /* ─── ANNOUNCEMENT BAR ───────────────────────────────────── */
+  .ann-bar {
+    background: var(--sage);
+    color: #fff;
+    text-align: center;
+    padding: 10px 20px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .ann-bar span { opacity: 0.75; margin: 0 8px; }
 
-/* FUNNEL MAP */
-.funnel-map {
-  background: var(--white);
-  border: 1px solid var(--mist);
-  border-radius: var(--radius-lg);
-  padding: 28px 24px;
-  margin-bottom: 36px;
-  box-shadow: var(--shadow);
-}
-.funnel-map h2 { font-family: var(--font-disp); font-size: 18px; font-weight: 900; margin-bottom: 20px; color: var(--sage); }
-.funnel-steps {
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-}
-.funnel-step {
-  display: grid;
-  grid-template-columns: 48px 1fr;
-  gap: 16px;
-  padding: 16px 0;
-  border-bottom: 1px dashed var(--mist);
-  align-items: center;
-}
-.funnel-step:last-child { border-bottom: none; }
-.f-icon {
-  width: 44px; height: 44px;
-  border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 18px; flex-shrink: 0;
-}
-.fi-1 { background: #fff3cd; }
-.fi-2 { background: var(--sage-light); }
-.fi-3 { background: #e8f0ff; }
-.fi-4 { background: #fff0f3; }
-.fi-5 { background: #f5f0ff; }
-.f-title { font-weight: 700; font-size: 14px; }
-.f-desc { font-size: 12px; color: var(--soft); margin-top: 2px; }
-.f-timing {
-  font-size: 10px; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase;
-  color: var(--amber); background: #fff3e8; padding: 2px 8px; border-radius: 999px;
-  margin-left: auto; flex-shrink: 0;
-}
+  /* ─── NAV ────────────────────────────────────────────────── */
+  .nav {
+    background: var(--white);
+    border-bottom: 1px solid var(--mist);
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .nav-logo {
+    font-family: var(--font-disp);
+    font-size: 22px;
+    font-weight: 900;
+    color: var(--ink);
+    letter-spacing: -0.5px;
+  }
+  .nav-logo em { color: var(--sage); font-style: normal; }
 
-/* ═══════════════════════════════════════ */
-/* THANK YOU PAGE                          */
-/* ═══════════════════════════════════════ */
-.ty-page {
-  background: var(--white);
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-  box-shadow: var(--shadow-lg);
-  margin-bottom: 40px;
-}
+  /* ─── CTA BUTTON ─────────────────────────────────────────── */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: var(--sage);
+    color: #fff;
+    font-family: var(--font-body);
+    font-size: 16px;
+    font-weight: 700;
+    padding: 16px 32px;
+    border-radius: 999px;
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.15s;
+    letter-spacing: 0.01em;
+    text-align: center;
+    width: 100%;
+    max-width: 380px;
+  }
+  .btn:hover { background: var(--sage-mid); transform: translateY(-1px); }
+  .btn--amber { background: var(--amber); }
+  .btn--amber:hover { background: #a86e2f; }
+  .btn-sub { font-size: 12px; font-weight: 400; opacity: 0.85; display: block; margin-top: 2px; }
+  .btn-wrap { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+  .btn-note { font-size: 12px; color: var(--text-soft); }
 
-/* top confetti bar */
-.ty-celebrate {
-  background: linear-gradient(135deg, var(--sage) 0%, #2d5240 100%);
-  padding: 36px 32px 32px;
-  text-align: center;
-  position: relative;
-  overflow: hidden;
-}
-.ty-celebrate::before {
-  content: '🎉🐾✨🎊🐱🐶🎉';
-  position: absolute;
-  top: 8px; left: 0; right: 0;
-  font-size: 20px;
-  opacity: 0.25;
-  letter-spacing: 8px;
-  white-space: nowrap;
-  overflow: hidden;
-}
-.ty-checkmark {
-  width: 64px; height: 64px;
-  background: rgba(255,255,255,0.15);
-  border: 3px solid rgba(255,255,255,0.4);
-  border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 28px;
-  margin: 0 auto 16px;
-}
-.ty-celebrate h1 {
-  font-family: var(--font-disp);
-  font-size: clamp(24px, 6vw, 36px);
-  font-weight: 900;
-  color: #fff;
-  margin-bottom: 10px;
-  line-height: 1.15;
-}
-.ty-celebrate p {
-  font-size: 16px;
-  color: rgba(255,255,255,0.8);
-  max-width: 440px;
-  margin: 0 auto;
-  line-height: 1.6;
-}
-.order-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  background: rgba(255,255,255,0.12);
-  border: 1px solid rgba(255,255,255,0.2);
-  border-radius: 999px;
-  padding: 8px 18px;
-  font-size: 13px;
-  font-weight: 600;
-  color: rgba(255,255,255,0.85);
-  margin-top: 18px;
-}
+  /* ─── SECTION BASE ───────────────────────────────────────── */
+  section { padding: 64px 0; }
+  section + section { border-top: 1px solid var(--mist); }
+  .section--smoke { background: var(--smoke); }
+  .section--sage { background: var(--sage-light); }
+  .section--dark { background: var(--ink); color: #fff; }
 
-/* order summary */
-.ty-order {
-  padding: 28px 32px;
-  border-bottom: 1px solid var(--mist);
-}
-.ty-order h3 {
-  font-family: var(--font-disp);
-  font-size: 17px;
-  font-weight: 700;
-  margin-bottom: 16px;
-}
-.order-item {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  padding: 14px 0;
-  border-bottom: 1px solid var(--mist);
-}
-.order-item:last-child { border-bottom: none; }
-.order-img {
-  width: 56px; height: 56px;
-  background: var(--smoke);
-  border-radius: 8px;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 24px; flex-shrink: 0;
-}
-.order-name { font-weight: 700; font-size: 14px; margin-bottom: 2px; }
-.order-meta { font-size: 12px; color: var(--soft); }
-.order-price { margin-left: auto; font-weight: 700; font-size: 15px; }
+  .eyebrow {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--sage);
+    margin-bottom: 12px;
+    display: block;
+  }
+  .eyebrow--white { color: rgba(255,255,255,0.6); }
 
-/* what happens next */
-.ty-next {
-  padding: 28px 32px;
-  border-bottom: 1px solid var(--mist);
-  background: var(--smoke);
-}
-.ty-next h3 { font-family: var(--font-disp); font-size: 17px; font-weight: 700; margin-bottom: 18px; }
-.next-steps { display: flex; flex-direction: column; gap: 14px; }
-.next-step {
-  display: flex; align-items: flex-start; gap: 14px;
-}
-.ns-dot {
-  width: 32px; height: 32px;
-  background: var(--sage);
-  border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  color: #fff; font-size: 13px; font-weight: 700;
-  flex-shrink: 0; margin-top: 2px;
-}
-.ns-title { font-size: 14px; font-weight: 700; margin-bottom: 2px; }
-.ns-desc { font-size: 13px; color: var(--soft); line-height: 1.55; }
+  h1, h2, h3, h4 { font-family: var(--font-disp); line-height: 1.15; }
+  h1 { font-size: clamp(34px, 8vw, 52px); font-weight: 900; letter-spacing: -1px; }
+  h2 { font-size: clamp(26px, 6vw, 38px); font-weight: 700; letter-spacing: -0.5px; }
+  h3 { font-size: 20px; font-weight: 700; }
+  p { color: var(--text-soft); line-height: 1.75; }
+  .dark-section p { color: rgba(255,255,255,0.75); }
 
-/* share section */
-.ty-share {
-  padding: 28px 32px;
-  border-bottom: 1px solid var(--mist);
-  text-align: center;
-}
-.ty-share h3 { font-family: var(--font-disp); font-size: 17px; font-weight: 700; margin-bottom: 8px; }
-.ty-share p { font-size: 14px; color: var(--soft); margin-bottom: 20px; }
-.share-btns { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
-.share-btn {
-  display: flex; align-items: center; gap: 8px;
-  padding: 10px 18px;
-  border-radius: 999px;
-  font-size: 13px; font-weight: 700;
-  border: none; cursor: pointer;
-  transition: opacity 0.15s;
-}
-.share-btn:hover { opacity: 0.85; }
-.sb-fb { background: #1877f2; color: #fff; }
-.sb-tt { background: #010101; color: #fff; }
-.sb-wa { background: #25d366; color: #fff; }
-.sb-copy { background: var(--smoke); border: 1px solid var(--mist); color: var(--ink); }
+  /* ─── HERO ───────────────────────────────────────────────── */
+  .hero {
+    background: var(--smoke);
+    padding: 56px 0 48px;
+    text-align: center;
+    border-top: none;
+  }
+  .hero-kicker {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--sage-light);
+    border: 1px solid #c2d9ca;
+    border-radius: 999px;
+    padding: 6px 14px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--sage);
+    margin-bottom: 20px;
+    letter-spacing: 0.03em;
+  }
+  .hero h1 { margin-bottom: 18px; }
+  .hero h1 em {
+    font-style: normal;
+    color: var(--sage);
+    position: relative;
+  }
+  .hero-sub {
+    font-size: 18px;
+    color: var(--text-soft);
+    margin-bottom: 32px;
+    max-width: 480px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.6;
+  }
 
-/* how to use */
-.ty-howto {
-  padding: 28px 32px;
-}
-.ty-howto h3 { font-family: var(--font-disp); font-size: 17px; font-weight: 700; margin-bottom: 16px; }
-.howto-steps { display: grid; gap: 14px; grid-template-columns: 1fr; }
-@media(min-width:480px){ .howto-steps { grid-template-columns: 1fr 1fr; } }
-.howto-step {
-  background: var(--sage-light);
-  border-radius: var(--radius);
-  padding: 16px;
-  display: flex; gap: 12px; align-items: flex-start;
-}
-.hs-num {
-  width: 28px; height: 28px;
-  background: var(--sage);
-  border-radius: 50%;
-  color: #fff;
-  font-family: var(--font-disp);
-  font-weight: 900; font-size: 14px;
-  display: flex; align-items: center; justify-content: center;
-  flex-shrink: 0;
-}
-.hs-title { font-size: 13px; font-weight: 700; margin-bottom: 3px; }
-.hs-desc { font-size: 12px; color: var(--soft); line-height: 1.5; }
+  /* image placeholder */
+  .img-placeholder {
+    background: var(--mist);
+    border-radius: var(--radius-lg);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #aaa;
+    font-size: 13px;
+    font-family: var(--font-body);
+    gap: 8px;
+    text-align: center;
+    padding: 20px;
+  }
+  .img-placeholder .icon { font-size: 32px; }
+  .hero-img {
+    height: 320px;
+    margin: 32px auto 0;
+    max-width: 480px;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+  }
+  @media(min-width:600px){ .hero-img { height: 400px; } }
 
+  /* trust badges */
+  .trust-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    margin-top: 28px;
+  }
+  .badge {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--white);
+    border: 1px solid var(--mist);
+    border-radius: 999px;
+    padding: 7px 14px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--ink);
+    box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+  }
+  .badge-icon { font-size: 14px; }
 
-/* ═══════════════════════════════════════ */
-/* OTO — ONE TIME OFFER / UPSELL PAGE     */
-/* ═══════════════════════════════════════ */
-.oto-page {
-  background: var(--white);
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-  box-shadow: var(--shadow-lg);
-  margin-bottom: 40px;
-}
+  /* stars */
+  .stars { color: #f4b400; font-size: 18px; letter-spacing: 1px; }
 
-.oto-hero {
-  background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
-  padding: 36px 32px;
-  text-align: center;
-}
-.oto-eyebrow {
-  display: inline-flex; align-items: center; gap: 6px;
-  background: var(--amber);
-  color: #fff;
-  font-size: 11px; font-weight: 700;
-  letter-spacing: 0.1em; text-transform: uppercase;
-  padding: 6px 16px; border-radius: 999px;
-  margin-bottom: 18px;
-}
-.oto-hero h1 {
-  font-family: var(--font-disp);
-  font-size: clamp(22px, 5vw, 34px);
-  font-weight: 900;
-  color: #fff;
-  line-height: 1.2;
-  margin-bottom: 12px;
-}
-.oto-hero h1 em { color: var(--gold); font-style: normal; }
-.oto-hero p { font-size: 15px; color: rgba(255,255,255,0.7); line-height: 1.65; max-width: 440px; margin: 0 auto; }
+  /* ─── FRUSTRATION SECTION ────────────────────────────────── */
+  .frustration-intro {
+    font-size: 18px;
+    line-height: 1.8;
+    color: var(--ink);
+    margin-bottom: 32px;
+  }
+  .frustration-intro strong { color: var(--sage); }
+  .frustration-grid {
+    display: grid;
+    gap: 14px;
+    grid-template-columns: 1fr;
+  }
+  @media(min-width:540px){ .frustration-grid { grid-template-columns: 1fr 1fr; } }
+  .frustration-card {
+    background: var(--white);
+    border: 1px solid var(--mist);
+    border-radius: var(--radius);
+    padding: 20px;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    box-shadow: var(--shadow);
+  }
+  .frustration-emoji { font-size: 28px; flex-shrink: 0; margin-top: 2px; }
+  .frustration-card h4 { margin-bottom: 4px; font-size: 15px; }
+  .frustration-card p { font-size: 14px; margin: 0; }
+  .frustration-close {
+    margin-top: 36px;
+    font-size: 20px;
+    font-family: var(--font-disp);
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1.4;
+    border-left: 4px solid var(--sage);
+    padding-left: 20px;
+  }
 
-/* timer */
-.oto-timer-wrap {
-  background: rgba(194,129,59,0.15);
-  border: 1px solid rgba(194,129,59,0.3);
-  border-radius: 10px;
-  padding: 14px 20px;
-  margin: 20px auto 0;
-  max-width: 360px;
-  text-align: center;
-}
-.oto-timer-label { font-size: 11px; font-weight: 700; color: var(--amber); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 8px; }
-.oto-timer {
-  display: flex; justify-content: center; gap: 6px; align-items: center;
-}
-.oto-timer-unit {
-  background: rgba(255,255,255,0.08);
-  border-radius: 6px;
-  padding: 8px 12px;
-  text-align: center;
-  min-width: 48px;
-}
-.otu-num { font-family: var(--font-disp); font-size: 24px; font-weight: 900; color: #fff; line-height: 1; }
-.otu-label { font-size: 9px; color: rgba(255,255,255,0.4); letter-spacing: 0.07em; text-transform: uppercase; margin-top: 2px; }
-.oto-colon { font-size: 22px; font-weight: 700; color: var(--amber); }
+  /* ─── PRODUCT INTRO ──────────────────────────────────────── */
+  .product-intro-layout {
+    display: grid;
+    gap: 40px;
+    align-items: center;
+  }
+  @media(min-width:620px){ .product-intro-layout { grid-template-columns: 1fr 1fr; } }
+  .product-img-block {
+    height: 340px;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+  }
+  .product-intro-copy h2 { margin-bottom: 16px; }
+  .product-intro-copy p { margin-bottom: 16px; }
+  .product-pill-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 20px;
+  }
+  .product-pill-list li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--ink);
+  }
+  .check {
+    width: 22px;
+    height: 22px;
+    background: var(--sage);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 12px;
+    flex-shrink: 0;
+  }
 
-/* oto product */
-.oto-product {
-  padding: 28px 32px;
-  border-bottom: 1px solid var(--mist);
-}
-.oto-product-layout {
-  display: grid;
-  gap: 28px;
-  align-items: center;
-}
-@media(min-width:540px){ .oto-product-layout { grid-template-columns: 140px 1fr; } }
-.oto-product-img {
-  height: 140px;
-  background: var(--smoke);
-  border-radius: var(--radius);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 52px;
-  box-shadow: var(--shadow);
-}
-.oto-product-name { font-family: var(--font-disp); font-size: 20px; font-weight: 900; margin-bottom: 8px; }
-.oto-product-tagline { font-size: 14px; color: var(--soft); margin-bottom: 14px; line-height: 1.6; }
-.oto-price-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 14px; }
-.oto-price-orig { font-size: 16px; color: #aaa; text-decoration: line-through; }
-.oto-price-new { font-size: 26px; font-weight: 900; font-family: var(--font-disp); color: var(--sage); }
-.oto-save-badge {
-  background: var(--sage-light);
-  border: 1px solid #c2d9ca;
-  color: var(--sage);
-  font-size: 12px; font-weight: 700;
-  padding: 4px 12px; border-radius: 999px;
-}
-.oto-bullets { list-style: none; display: flex; flex-direction: column; gap: 8px; }
-.oto-bullets li {
-  display: flex; align-items: center; gap: 8px;
-  font-size: 13px; color: var(--ink);
-}
-.ob-check {
-  width: 20px; height: 20px;
-  background: var(--sage); border-radius: 50%;
-  color: #fff; font-size: 10px;
-  display: flex; align-items: center; justify-content: center;
-  flex-shrink: 0;
-}
+  /* ─── WHY SECTION ────────────────────────────────────────── */
+  .why-lede {
+    font-size: 20px;
+    line-height: 1.7;
+    color: var(--ink);
+    margin-bottom: 36px;
+    font-family: var(--font-disp);
+    font-weight: 700;
+  }
+  .why-lede em { color: var(--sage); font-style: italic; }
+  .why-cards {
+    display: grid;
+    gap: 16px;
+    grid-template-columns: 1fr;
+  }
+  @media(min-width:540px){ .why-cards { grid-template-columns: 1fr 1fr; } }
+  .why-card {
+    background: var(--white);
+    border-radius: var(--radius);
+    padding: 24px;
+    box-shadow: var(--shadow);
+    border-top: 3px solid var(--sage);
+  }
+  .why-card-icon { font-size: 28px; margin-bottom: 12px; }
+  .why-card h3 { font-size: 17px; margin-bottom: 8px; }
+  .why-card p { font-size: 14px; }
 
-/* oto why */
-.oto-why {
-  padding: 24px 32px;
-  background: var(--smoke);
-  border-bottom: 1px solid var(--mist);
-}
-.oto-why h3 { font-family: var(--font-disp); font-size: 17px; font-weight: 700; margin-bottom: 14px; }
-.oto-why p { font-size: 14px; color: var(--soft); line-height: 1.75; margin-bottom: 10px; }
+  /* ─── BENEFITS ───────────────────────────────────────────── */
+  .benefit-item {
+    display: grid;
+    gap: 24px;
+    align-items: center;
+    padding: 36px 0;
+  }
+  .benefit-item + .benefit-item { border-top: 1px solid var(--mist); }
+  @media(min-width:600px){
+    .benefit-item { grid-template-columns: 72px 1fr; }
+    .benefit-item.flip { grid-template-columns: 1fr 72px; }
+    .benefit-item.flip .benefit-num { order: 2; }
+  }
+  .benefit-num {
+    width: 64px;
+    height: 64px;
+    background: var(--sage-light);
+    border-radius: var(--radius);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-disp);
+    font-size: 26px;
+    font-weight: 900;
+    color: var(--sage);
+    flex-shrink: 0;
+  }
+  .benefit-copy h3 { margin-bottom: 8px; }
+  .benefit-copy p { font-size: 15px; }
 
-/* oto cta */
-.oto-cta {
-  padding: 28px 32px;
-  text-align: center;
-}
-.btn-oto {
-  display: inline-flex;
-  flex-direction: column;
-  align-items: center;
-  background: var(--amber);
-  color: #fff;
-  font-family: var(--font-body);
-  font-size: 17px; font-weight: 700;
-  padding: 18px 36px;
-  border-radius: 999px;
-  border: none; cursor: pointer;
-  width: 100%; max-width: 420px;
-  transition: background 0.2s, transform 0.15s;
-  letter-spacing: 0.01em;
-  line-height: 1.3;
-}
-.btn-oto:hover { background: var(--amber-dark); transform: translateY(-1px); }
-.btn-oto-sub { font-size: 12px; font-weight: 400; opacity: 0.85; margin-top: 4px; }
-.oto-decline {
-  display: block;
-  margin-top: 14px;
-  font-size: 12px; color: #bbb;
-  cursor: pointer; background: none; border: none;
-  font-family: var(--font-body);
-  text-decoration: underline; text-underline-offset: 2px;
-  text-align: center; width: 100%;
-}
-.oto-decline:hover { color: var(--soft); }
-.oto-trust { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; margin-top: 16px; }
-.oto-trust-item { font-size: 12px; font-weight: 600; color: var(--soft); display: flex; align-items: center; gap: 4px; }
+  /* ─── BEFORE / AFTER ─────────────────────────────────────── */
+  .ba-grid {
+    display: grid;
+    gap: 20px;
+  }
+  @media(min-width:540px){ .ba-grid { grid-template-columns: 1fr 1fr; } }
+  .ba-card {
+    border-radius: var(--radius-lg);
+    padding: 28px 24px;
+  }
+  .ba-before {
+    background: #fff2f2;
+    border: 1px solid #fcd5d5;
+  }
+  .ba-after {
+    background: var(--sage-light);
+    border: 1px solid #c2d9ca;
+  }
+  .ba-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  .ba-before .ba-label { color: #c0392b; }
+  .ba-after .ba-label { color: var(--sage); }
+  .ba-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .ba-list li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--ink);
+  }
+  .ba-list li .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .ba-before .dot { background: #e74c3c; }
+  .ba-after .dot { background: var(--sage); }
 
+  /* ─── WHERE IT WORKS ─────────────────────────────────────── */
+  .where-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+  @media(min-width:540px){ .where-grid { grid-template-columns: repeat(4, 1fr); } }
+  .where-item {
+    background: var(--white);
+    border: 1px solid var(--mist);
+    border-radius: var(--radius);
+    padding: 20px 14px;
+    text-align: center;
+    box-shadow: var(--shadow);
+  }
+  .where-icon { font-size: 30px; margin-bottom: 8px; }
+  .where-item span {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--ink);
+  }
 
-/* ═══════════════════════════════════════ */
-/* POST-PURCHASE EMAIL FLOW               */
-/* ═══════════════════════════════════════ */
-.email-flow {
-  display: grid;
-  gap: 20px;
-}
-.email-card {
-  background: var(--white);
-  border: 1px solid var(--mist);
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-  box-shadow: var(--shadow);
-}
-.email-card-header {
-  padding: 18px 24px;
-  display: flex; align-items: flex-start; gap: 14px; flex-wrap: wrap;
-}
-.ec-badge {
-  width: 40px; height: 40px; border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 16px; flex-shrink: 0;
-}
-.ecb-1 { background: var(--sage-light); }
-.ecb-2 { background: #e8f0ff; }
-.ecb-3 { background: #fff3e8; }
-.ecb-4 { background: #f5f0ff; }
-.ec-title { font-family: var(--font-disp); font-size: 16px; font-weight: 900; margin-bottom: 4px; }
-.ec-tags { display: flex; flex-wrap: wrap; gap: 6px; }
-.ec-tag {
-  font-size: 10px; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase;
-  padding: 3px 9px; border-radius: 999px;
-}
-.ect-timing { background: #fff3e8; color: var(--amber); }
-.ect-goal   { background: var(--sage-light); color: var(--sage); }
-.email-card-body { padding: 0 24px 24px; }
+  /* ─── HOW IT WORKS ───────────────────────────────────────── */
+  .steps {
+    display: grid;
+    gap: 0;
+    position: relative;
+  }
+  .step {
+    display: grid;
+    grid-template-columns: 52px 1fr;
+    gap: 20px;
+    padding: 28px 0;
+    position: relative;
+  }
+  .step + .step { border-top: 1px dashed var(--mist); }
+  .step-num {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: var(--sage);
+    color: #fff;
+    font-family: var(--font-disp);
+    font-weight: 900;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .step-copy h3 { font-size: 17px; margin-bottom: 6px; }
+  .step-copy p { font-size: 14px; }
 
-.subj-box {
-  background: var(--smoke);
-  border: 1px solid var(--mist);
-  border-left: 3px solid var(--amber);
-  border-radius: var(--radius);
-  padding: 12px 14px;
-  margin-bottom: 14px;
-}
-.subj-label { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--soft); margin-bottom: 6px; }
-.subj-line { font-size: 14px; font-weight: 700; color: var(--ink); }
-.subj-prev { font-size: 12px; color: #bbb; margin-top: 3px; }
+  /* ─── COMPARISON TABLE ───────────────────────────────────── */
+  .table-wrap { overflow-x: auto; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+  thead th {
+    padding: 14px 16px;
+    text-align: center;
+    font-weight: 700;
+    font-size: 13px;
+    background: var(--smoke);
+    border-bottom: 2px solid var(--mist);
+  }
+  thead th.highlight {
+    background: var(--sage);
+    color: #fff;
+    border-radius: var(--radius) var(--radius) 0 0;
+  }
+  tbody tr:nth-child(even) td { background: var(--smoke); }
+  tbody td {
+    padding: 13px 16px;
+    text-align: center;
+    border-bottom: 1px solid var(--mist);
+    color: var(--text-soft);
+  }
+  tbody td:first-child { text-align: left; font-weight: 500; color: var(--ink); }
+  tbody td.highlight {
+    background: var(--sage-light);
+    font-weight: 600;
+    color: var(--sage);
+  }
+  .tick { color: var(--sage); font-size: 16px; }
+  .cross { color: #e74c3c; font-size: 16px; }
+  .partial { color: var(--amber); font-size: 16px; }
 
-.email-copy {
-  background: #fafafa;
-  border: 1px solid var(--mist);
-  border-radius: var(--radius);
-  padding: 20px;
-  font-size: 14px;
-  line-height: 1.8;
-  color: var(--soft);
-  white-space: pre-wrap;
-}
-.email-copy strong { color: var(--ink); }
+  /* ─── REVIEWS ────────────────────────────────────────────── */
+  .reviews-grid {
+    display: grid;
+    gap: 16px;
+    grid-template-columns: 1fr;
+  }
+  @media(min-width:540px){ .reviews-grid { grid-template-columns: 1fr 1fr; } }
+  .review-card {
+    background: var(--white);
+    border: 1px solid var(--mist);
+    border-radius: var(--radius);
+    padding: 22px;
+    box-shadow: var(--shadow);
+  }
+  .review-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+  .reviewer-avatar {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: var(--sage-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-disp);
+    font-weight: 900;
+    font-size: 18px;
+    color: var(--sage);
+    flex-shrink: 0;
+  }
+  .reviewer-name { font-weight: 700; font-size: 14px; margin-bottom: 2px; }
+  .reviewer-pet { font-size: 12px; color: var(--text-soft); }
+  .review-body { font-size: 14px; line-height: 1.7; color: var(--text-soft); }
+  .verified {
+    font-size: 11px;
+    color: var(--sage);
+    font-weight: 600;
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
 
+  /* ─── FAQ ────────────────────────────────────────────────── */
+  .faq-item {
+    padding: 20px 0;
+    border-bottom: 1px solid var(--mist);
+  }
+  .faq-q {
+    font-weight: 700;
+    font-size: 16px;
+    color: var(--ink);
+    margin-bottom: 8px;
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+  }
+  .faq-q::before {
+    content: 'Q';
+    background: var(--sage);
+    color: #fff;
+    font-family: var(--font-disp);
+    font-size: 13px;
+    font-weight: 900;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .faq-a { font-size: 15px; color: var(--text-soft); padding-left: 34px; line-height: 1.7; }
 
-/* ═══════════════════════════════════════ */
-/* REFERRAL SECTION                        */
-/* ═══════════════════════════════════════ */
-.referral-box {
-  background: var(--white);
-  border-radius: var(--radius-lg);
-  padding: 32px;
-  box-shadow: var(--shadow);
-  margin-bottom: 40px;
-}
-.referral-box h2 { font-family: var(--font-disp); font-size: 22px; font-weight: 900; margin-bottom: 12px; }
-.referral-box p { font-size: 14px; color: var(--soft); margin-bottom: 20px; line-height: 1.7; }
-.referral-grid { display: grid; gap: 14px; }
-@media(min-width:540px){ .referral-grid { grid-template-columns: 1fr 1fr; } }
-.ref-card {
-  background: var(--smoke);
-  border: 1px solid var(--mist);
-  border-radius: var(--radius);
-  padding: 20px;
-}
-.ref-icon { font-size: 28px; margin-bottom: 10px; }
-.ref-title { font-size: 14px; font-weight: 700; margin-bottom: 6px; }
-.ref-desc { font-size: 13px; color: var(--soft); line-height: 1.55; }
+  /* ─── OFFER ──────────────────────────────────────────────── */
+  .offer-section { background: var(--ink); color: #fff; }
+  .offer-section .eyebrow { color: var(--amber); }
+  .offer-section h2 { color: #fff; margin-bottom: 12px; }
+  .offer-section p { color: rgba(255,255,255,0.7); }
+  .offer-cards {
+    display: grid;
+    gap: 16px;
+    margin-top: 36px;
+  }
+  @media(min-width:540px){ .offer-cards { grid-template-columns: repeat(3, 1fr); } }
+  .offer-card {
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: var(--radius-lg);
+    padding: 28px 20px;
+    text-align: center;
+    position: relative;
+    transition: border-color 0.2s;
+  }
+  .offer-card.best {
+    border-color: var(--amber);
+    background: rgba(194,129,59,0.12);
+  }
+  .offer-best-badge {
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--amber);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 4px 14px;
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+  .offer-qty {
+    font-family: var(--font-disp);
+    font-size: 28px;
+    font-weight: 900;
+    color: #fff;
+    margin-bottom: 4px;
+  }
+  .offer-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.5);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  .offer-price {
+    font-size: 26px;
+    font-weight: 700;
+    color: #fff;
+  }
+  .offer-price-orig {
+    font-size: 14px;
+    color: rgba(255,255,255,0.4);
+    text-decoration: line-through;
+    margin-bottom: 6px;
+  }
+  .offer-saving {
+    font-size: 13px;
+    color: var(--amber);
+    font-weight: 600;
+    margin-bottom: 20px;
+  }
+  .offer-card .btn {
+    font-size: 14px;
+    padding: 13px 20px;
+  }
 
-/* STRATEGY NOTES */
-.notes-grid { display: grid; gap: 14px; }
-@media(min-width:540px){ .notes-grid { grid-template-columns: 1fr 1fr; } }
-.note-card {
-  background: var(--white);
-  border: 1px solid var(--mist);
-  border-radius: var(--radius);
-  padding: 20px;
-  box-shadow: var(--shadow);
-}
-.note-card h3 { font-size: 14px; font-weight: 700; margin-bottom: 10px; }
-.note-card ul { padding-left: 16px; display: flex; flex-direction: column; gap: 6px; }
-.note-card li { font-size: 13px; color: var(--soft); line-height: 1.55; }
+  /* ─── URGENCY ────────────────────────────────────────────── */
+  .urgency-section { background: var(--sage-light); border-top: none; }
+  .urgency-box {
+    background: var(--white);
+    border-radius: var(--radius-lg);
+    padding: 32px 28px;
+    box-shadow: var(--shadow);
+    text-align: center;
+  }
+  .urgency-box h2 { margin-bottom: 12px; }
+  .urgency-box p { max-width: 480px; margin: 0 auto 24px; }
+  .stock-bar {
+    max-width: 320px;
+    margin: 0 auto 8px;
+    background: var(--mist);
+    border-radius: 999px;
+    height: 8px;
+    overflow: hidden;
+  }
+  .stock-fill {
+    height: 100%;
+    width: 37%;
+    background: var(--sage);
+    border-radius: 999px;
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%,100%{ opacity:1; }
+    50%{ opacity:0.7; }
+  }
+  .stock-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--sage);
+    margin-bottom: 24px;
+  }
+
+  /* ─── FINAL CTA ──────────────────────────────────────────── */
+  .final-cta { background: var(--smoke); text-align: center; }
+  .final-cta h2 { margin-bottom: 16px; }
+  .final-cta p { margin-bottom: 32px; font-size: 17px; max-width: 420px; margin-left: auto; margin-right: auto; }
+  .final-cta .trust-badges { margin-bottom: 32px; }
+
+  /* ─── FOOTER ─────────────────────────────────────────────── */
+  footer {
+    background: var(--ink);
+    color: rgba(255,255,255,0.5);
+    text-align: center;
+    padding: 32px 20px;
+    font-size: 13px;
+  }
+  footer a { color: rgba(255,255,255,0.6); }
+  footer .footer-logo {
+    font-family: var(--font-disp);
+    font-size: 20px;
+    font-weight: 900;
+    color: #fff;
+    margin-bottom: 16px;
+  }
+  footer .footer-logo em { color: var(--sage-mid); font-style: normal; }
+  .footer-links {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+    font-size: 13px;
+  }
+
+  /* ─── STICKY CTA ─────────────────────────────────────────── */
+  .sticky-cta {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: var(--white);
+    border-top: 1px solid var(--mist);
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    z-index: 200;
+    box-shadow: 0 -4px 24px rgba(0,0,0,0.08);
+  }
+  .sticky-cta-left {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--ink);
+  }
+  .sticky-cta-left span {
+    display: block;
+    font-size: 12px;
+    font-weight: 400;
+    color: var(--text-soft);
+  }
+  .sticky-cta .btn {
+    width: auto;
+    flex-shrink: 0;
+    font-size: 14px;
+    padding: 12px 22px;
+  }
+
+  /* ─── REVIEW AGGREGATE ───────────────────────────────────── */
+  .review-agg {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 36px;
+    flex-wrap: wrap;
+  }
+  .review-agg .stars { font-size: 22px; }
+  .review-agg-text { font-weight: 700; font-size: 15px; }
+  .review-agg-text span { color: var(--text-soft); font-weight: 400; }
+
+  /* ─── RESPONSIVE ─────────────────────────────────────────── */
+  @media(max-width:480px){
+    section { padding: 48px 0; }
+    h2 { font-size: 26px; }
+    .sticky-cta-left { display: none; }
+    .sticky-cta .btn { width: 100%; max-width: 100%; }
+  }
 </style>
 </head>
 <body>
-<div class="page">
 
-<!-- HEADER -->
-<div class="page-header">
-  <h1>Fur<em>Away</em>™ — Post-Purchase Sequence</h1>
-  <p>Thank You Page · One-Time Offer · Post-Purchase Email Flow · Referral Programme</p>
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- ANNOUNCEMENT BAR                                           -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<div class="ann-bar">
+  🇬🇧 Free UK Delivery on Orders Over £30 <span>·</span> 30-Day Satisfaction Guarantee <span>·</span> Over 12,000 Happy Pet Owners
 </div>
 
-<!-- FUNNEL MAP -->
-<div class="funnel-map">
-  <h2>📍 The Post-Purchase Funnel</h2>
-  <div class="funnel-steps">
-    <div class="funnel-step">
-      <div class="f-icon fi-1">✅</div>
-      <div>
-        <div class="f-title">1. Thank You Page</div>
-        <div class="f-desc">Confirms the order, builds trust, sets expectations, and plants the seed for the upsell</div>
-      </div>
-      <div class="f-timing">Immediately</div>
-    </div>
-    <div class="funnel-step">
-      <div class="f-icon fi-2">🎁</div>
-      <div>
-        <div class="f-title">2. One-Time Upsell Offer (OTO)</div>
-        <div class="f-desc">Limited-time add-on shown immediately after purchase — increases AOV by 25–40%</div>
-      </div>
-      <div class="f-timing">Same session</div>
-    </div>
-    <div class="funnel-step">
-      <div class="f-icon fi-3">📧</div>
-      <div>
-        <div class="f-title">3. Confirmation Email</div>
-        <div class="f-desc">Order confirmed, how-to guide, builds excitement before the product arrives</div>
-      </div>
-      <div class="f-timing">Immediately</div>
-    </div>
-    <div class="funnel-step">
-      <div class="f-icon fi-4">📦</div>
-      <div>
-        <div class="f-title">4. Dispatch Email + Tips</div>
-        <div class="f-desc">Shipped notification + pro tips to get the best results on day one</div>
-      </div>
-      <div class="f-timing">On dispatch</div>
-    </div>
-    <div class="funnel-step">
-      <div class="f-icon fi-5">⭐</div>
-      <div>
-        <div class="f-title">5. Review Request + Referral</div>
-        <div class="f-desc">Request a review + introduce referral programme for organic growth</div>
-      </div>
-      <div class="f-timing">7 days post-delivery</div>
-    </div>
-  </div>
-</div>
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- NAV                                                        -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<nav class="nav">
+  <div class="nav-logo">Fur<em>Away</em>™</div>
+</nav>
 
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- SECTION 1 – HERO                                          -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-kicker">🐾 Designed for UK Pet Owners</div>
 
-<!-- ═══════════════════════════════════════════════ -->
-<!-- STEP 1 — THANK YOU PAGE                         -->
-<!-- ═══════════════════════════════════════════════ -->
-<div class="section-label">Step 1 — Thank You Page</div>
+    <h1>
+      Love Your Pet.<br />
+      Ditch the <em>Fur</em>.
+    </h1>
 
-<div class="ty-page">
+    <p class="hero-sub">
+      FurAway™ removes pet hair from sofas, clothes, beds and more — in seconds. No refills. No batteries. Just effortless results.
+    </p>
 
-  <!-- Hero celebration -->
-  <div class="ty-celebrate">
-    <div class="ty-checkmark">✓</div>
-    <h1>Order confirmed.<br/>Your sofa's days are numbered, {{first_name}}.</h1>
-    <p>You've just made the best decision your furniture has ever witnessed. FurAway™ is on its way.</p>
-    <div class="order-badge">📦 Order #FW-28471 · Estimated delivery: 3–5 working days</div>
-  </div>
-
-  <!-- Order summary -->
-  <div class="ty-order">
-    <h3>Your Order</h3>
-    <div class="order-item">
-      <div class="order-img">🐾</div>
-      <div>
-        <div class="order-name">FurAway™ Pet Hair Remover × 2</div>
-        <div class="order-meta">Buy 2 Get 1 Free Bundle · Sage Green</div>
-      </div>
-      <div class="order-price">£34.99</div>
+    <div class="btn-wrap">
+      <a href="#offer" class="btn btn--amber">
+        Get My FurAway™ →
+        <span class="btn-sub">Save up to 40% · Limited Stock</span>
+      </a>
+      <span class="btn-note">⭐ 4.9/5 from 2,400+ reviews · Free Returns</span>
     </div>
-    <div class="order-item">
-      <div class="order-img">🚚</div>
-      <div>
-        <div class="order-name">Standard UK Delivery</div>
-        <div class="order-meta">3–5 working days · Tracked</div>
-      </div>
-      <div class="order-price" style="color:var(--sage);">FREE</div>
+
+    <!-- HERO IMAGE PLACEHOLDER -->
+    <div class="hero-img img-placeholder">
+      <span class="icon">📸</span>
+      <strong>Hero Lifestyle Image</strong>
+      <span>Person using FurAway™ on sofa, golden light, clean home, happy dog nearby<br/>Recommended: 800×600px WebP, lifestyle photography</span>
+    </div>
+
+    <!-- TRUST BADGES -->
+    <div class="trust-badges">
+      <div class="badge"><span class="badge-icon">⭐</span> 4.9/5 Rating</div>
+      <div class="badge"><span class="badge-icon">🔄</span> Reusable & Washable</div>
+      <div class="badge"><span class="badge-icon">🇬🇧</span> Ships from UK</div>
+      <div class="badge"><span class="badge-icon">💳</span> Secure Checkout</div>
+      <div class="badge"><span class="badge-icon">📦</span> Free Returns</div>
     </div>
   </div>
+</section>
 
-  <!-- What happens next -->
-  <div class="ty-next">
-    <h3>What happens next</h3>
-    <div class="next-steps">
-      <div class="next-step">
-        <div class="ns-dot">1</div>
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- SECTION 2 – THE DAILY FRUSTRATION                         -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<section class="section--smoke">
+  <div class="container">
+    <span class="eyebrow">Sound familiar?</span>
+    <h2>You adore your pet.<br/>But the hair is relentless.</h2>
+
+    <p class="frustration-intro" style="margin:20px 0 32px;">
+      You love your dog or cat with everything you've got — but that doesn't mean you love finding their fur on your best black jumper at 8am, or watching it drift across the sofa just after you've tidied up. <strong>You're not alone.</strong>
+    </p>
+
+    <div class="frustration-grid">
+      <div class="frustration-card">
+        <span class="frustration-emoji">🧥</span>
         <div>
-          <div class="ns-title">Confirmation email on its way</div>
-          <div class="ns-desc">We've sent a confirmation to your email address with your order details and tracking link.</div>
+          <h4>The Black-Clothes Problem</h4>
+          <p>You reach for your favourite dark trousers and within seconds they're covered. You've stopped wearing black entirely.</p>
         </div>
       </div>
-      <div class="next-step">
-        <div class="ns-dot">2</div>
+      <div class="frustration-card">
+        <span class="frustration-emoji">🛋️</span>
         <div>
-          <div class="ns-title">We'll dispatch within 1–2 working days</div>
-          <div class="ns-desc">We ship from the UK. You'll receive a dispatch email with your tracking number as soon as it leaves us.</div>
+          <h4>The Sofa Situation</h4>
+          <p>You've cleaned it twice this week. By Tuesday evening, it looks like you never bothered at all.</p>
         </div>
       </div>
-      <div class="next-step">
-        <div class="ns-dot">3</div>
+      <div class="frustration-card">
+        <span class="frustration-emoji">🛏️</span>
         <div>
-          <div class="ns-title">Your FurAway™ arrives in 3–5 days</div>
-          <div class="ns-desc">Once it arrives, you'll be genuinely amazed at what it picks up in the first 60 seconds. We've included a quick-start guide in the box.</div>
+          <h4>Fur in the Bedroom</h4>
+          <p>You change the bedding, wash the duvet cover, and somehow — within 24 hours — there it is again.</p>
+        </div>
+      </div>
+      <div class="frustration-card">
+        <span class="frustration-emoji">🚗</span>
+        <div>
+          <h4>The Car Seat Chaos</h4>
+          <p>Every dog walk ends with the back seat looking like a shedding competition. Passengers have noticed.</p>
+        </div>
+      </div>
+      <div class="frustration-card">
+        <span class="frustration-emoji">😳</span>
+        <div>
+          <h4>The Guest Panic</h4>
+          <p>Someone rings the doorbell unannounced and you're frantically running the lint roller over every surface while they wait outside.</p>
+        </div>
+      </div>
+      <div class="frustration-card">
+        <span class="frustration-emoji">🌀</span>
+        <div>
+          <h4>The Vacuum Loop</h4>
+          <p>Vacuum on Monday. Furry again by Wednesday. You're cleaning constantly but nothing seems to stay clean long enough to matter.</p>
         </div>
       </div>
     </div>
+
+    <p class="frustration-close">
+      "There has to be a better way." — There is.
+    </p>
   </div>
+</section>
 
-  <!-- How to use -->
-  <div class="ty-howto">
-    <h3>Get the best results from day one</h3>
-    <div class="howto-steps">
-      <div class="howto-step">
-        <div class="hs-num">1</div>
-        <div>
-          <div class="hs-title">Place flat on the surface</div>
-          <div class="hs-desc">Lay FurAway™ against any fabric — sofa, clothing, or bedding. No prep needed.</div>
-        </div>
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- SECTION 3 – INTRODUCE FURAWAY™                            -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<section>
+  <div class="container">
+    <div class="product-intro-layout">
+      <!-- PRODUCT IMAGE PLACEHOLDER -->
+      <div class="product-img-block img-placeholder">
+        <span class="icon">📸</span>
+        <strong>Product Hero Shot</strong>
+        <span>FurAway™ held in hand or mid-use on fabric<br/>Clean white/sage background, premium feel<br/>Recommended: 600×680px WebP</span>
       </div>
-      <div class="howto-step">
-        <div class="hs-num">2</div>
-        <div>
-          <div class="hs-title">Glide in short strokes</div>
-          <div class="hs-desc">Works in both directions. Short strokes are more effective than long sweeps.</div>
-        </div>
-      </div>
-      <div class="howto-step">
-        <div class="hs-num">3</div>
-        <div>
-          <div class="hs-title">Remove collected fur</div>
-          <div class="hs-desc">Peel the gathered fur from the surface — it bundles up satisfyingly into one clump.</div>
-        </div>
-      </div>
-      <div class="howto-step">
-        <div class="hs-num">4</div>
-        <div>
-          <div class="hs-title">Rinse to reset</div>
-          <div class="hs-desc">Under cold water for 10 seconds. Air dry. It's ready to use again immediately.</div>
-        </div>
-      </div>
-    </div>
-  </div>
 
-  <!-- Share -->
-  <div class="ty-share">
-    <h3>Know another pet owner who'd love this?</h3>
-    <p>Share FurAway™ and help a fellow dog or cat owner reclaim their sofa.</p>
-    <div class="share-btns">
-      <button class="share-btn sb-fb">📘 Facebook</button>
-      <button class="share-btn sb-tt">🎵 TikTok</button>
-      <button class="share-btn sb-wa">💬 WhatsApp</button>
-      <button class="share-btn sb-copy">🔗 Copy Link</button>
-    </div>
-  </div>
+      <div class="product-intro-copy">
+        <span class="eyebrow">Meet the solution</span>
+        <h2>Introducing FurAway™</h2>
+        <p>
+          FurAway™ is the reusable pet hair remover designed for people who love their pets but want their home to look like it. No sticky tape. No replacement pads. No fuss.
+        </p>
+        <p>
+          Its unique bidirectional cleaning surface grabs pet hair on contact — from fabric fibres, cushions, upholstery, even car seats — and lifts it cleanly away. Once done, simply rinse, let it dry, and it's ready again.
+        </p>
+        <p>
+          It works just as well on a Monday morning before work as it does on a Sunday when guests are on their way.
+        </p>
 
-</div>
-
-
-<!-- ═══════════════════════════════════════════════ -->
-<!-- STEP 2 — ONE TIME OFFER (UPSELL)                -->
-<!-- ═══════════════════════════════════════════════ -->
-<div class="section-label">Step 2 — One-Time Upsell Offer (OTO)</div>
-
-<div class="oto-page">
-
-  <div class="oto-hero">
-    <div class="oto-eyebrow">⚡ One-Time Offer — This Page Only</div>
-    <h1>Add a <em>Spare FurAway™</em><br/>for the Car — at 40% Off.</h1>
-    <p>Most customers wish they'd ordered one for the car at the same time. Here's your chance — at a price we can only offer right now, while your order is still being processed.</p>
-
-    <!-- Countdown timer -->
-    <div class="oto-timer-wrap">
-      <div class="oto-timer-label">⏳ This offer expires in</div>
-      <div class="oto-timer">
-        <div class="oto-timer-unit"><div class="otu-num" id="mins">14</div><div class="otu-label">mins</div></div>
-        <div class="oto-colon">:</div>
-        <div class="oto-timer-unit"><div class="otu-num" id="secs">59</div><div class="otu-label">secs</div></div>
-      </div>
-    </div>
-  </div>
-
-  <div class="oto-product">
-    <div class="oto-product-layout">
-      <div class="oto-product-img">🚗</div>
-      <div>
-        <div class="oto-product-name">FurAway™ — Car Edition</div>
-        <div class="oto-product-tagline">The same FurAway™ you just ordered — sized and designed to live in your glove box permanently. Tackles dog hair on car seats and boot liners in seconds.</div>
-        <div class="oto-price-row">
-          <span class="oto-price-orig">£19.99</span>
-          <span class="oto-price-new">£11.99</span>
-          <span class="oto-save-badge">Save 40%</span>
-        </div>
-        <ul class="oto-bullets">
-          <li><div class="ob-check">✓</div> Compact — fits in any glove box or door pocket</li>
-          <li><div class="ob-check">✓</div> Works on all car seat fabrics including velour</li>
-          <li><div class="ob-check">✓</div> Ships with your existing order — no extra delivery cost</li>
-          <li><div class="ob-check">✓</div> 40% off — only available on this page, right now</li>
+        <ul class="product-pill-list">
+          <li><div class="check">✓</div> No refills — ever</li>
+          <li><div class="check">✓</div> Works on cats and dogs</li>
+          <li><div class="check">✓</div> Use on any fabric surface</li>
+          <li><div class="check">✓</div> Lightweight, compact, easy to store</li>
+          <li><div class="check">✓</div> Rinse clean in seconds</li>
         </ul>
       </div>
     </div>
   </div>
+</section>
 
-  <div class="oto-why">
-    <h3>Why now? And why the car?</h3>
-    <p>Every dog owner we speak to tells us the same thing: "I use it everywhere at home — but the car is the one place I always forget." The back seat after a walk. The boot after the beach. The passenger seat when your dog decides it's their seat now.</p>
-    <p>We can add it to your existing order right now at 40% off — because the packaging is already sorted and the delivery cost is already covered. Once this page is gone, the discount goes with it.</p>
-  </div>
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- SECTION 4 – WHY PET OWNERS NEED IT                        -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<section class="section--smoke">
+  <div class="container">
+    <span class="eyebrow">Why it matters</span>
+    <p class="why-lede">
+      It's not just about fur. It's about getting back your <em>time, confidence, and comfort</em> — without giving up your pet.
+    </p>
 
-  <div class="oto-cta">
-    <button class="btn-oto">
-      Yes — Add Car Edition for £11.99 →
-      <span class="btn-oto-sub">Ships with your order · No extra delivery · 40% off today only</span>
-    </button>
-    <button class="oto-decline">No thanks — I don't need it for the car</button>
-    <div class="oto-trust">
-      <span class="oto-trust-item">🔒 One click — added to your existing order</span>
-      <span class="oto-trust-item">📦 Same delivery, no extra shipping</span>
-      <span class="oto-trust-item">↩️ 30-day guarantee</span>
+    <div class="why-cards">
+      <div class="why-card">
+        <div class="why-card-icon">🕐</div>
+        <h3>Less Time Cleaning</h3>
+        <p>Stop repeating the same clean-ups day after day. FurAway™ gets the job done quickly so you can spend that time on something you actually enjoy.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-card-icon">🏠</div>
+        <h3>A Home That Feels Yours Again</h3>
+        <p>Your home is for living in — comfortably. Not for apologising about when someone drops by. Reclaim your space.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-card-icon">👕</div>
+        <h3>Wear What You Like</h3>
+        <p>Black jeans, navy coats, cashmere jumpers — nothing should be off-limits just because of your pet. Wear your wardrobe with confidence again.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-card-icon">😌</div>
+        <h3>Less Stress, Full Stop</h3>
+        <p>Pet hair is surprisingly stressful. The daily battle adds up. FurAway™ takes that tension off the table, quietly and reliably.</p>
+      </div>
     </div>
   </div>
+</section>
 
-</div>
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- SECTION 5 – KEY BENEFITS                                   -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<section>
+  <div class="container">
+    <span class="eyebrow">What makes it different</span>
+    <h2>Five reasons 12,000+ pet owners switched</h2>
 
+    <div class="benefit-item">
+      <div class="benefit-num">01</div>
+      <div class="benefit-copy">
+        <h3>Genuinely Reusable — No Hidden Costs</h3>
+        <p>Most lint rollers run out in a week. FurAway™ never needs replacing. Rinse it under the tap and it's back to full performance. It pays for itself within the first month and keeps going from there.</p>
+      </div>
+    </div>
 
-<!-- ═══════════════════════════════════════════════ -->
-<!-- POST-PURCHASE EMAIL FLOW                        -->
-<!-- ═══════════════════════════════════════════════ -->
-<div class="section-label">Steps 3–5 — Post-Purchase Email Flow</div>
+    <div class="benefit-item">
+      <div class="benefit-num">02</div>
+      <div class="benefit-copy">
+        <h3>Bidirectional Cleaning for Total Coverage</h3>
+        <p>The surface works in both directions — push and pull — so you can tackle any surface thoroughly and quickly. No frustrating single-stroke limitations. You'll feel the difference on your first use.</p>
+      </div>
+    </div>
 
-<div class="email-flow">
+    <div class="benefit-item">
+      <div class="benefit-num">03</div>
+      <div class="benefit-copy">
+        <h3>Works on Every Surface That Matters</h3>
+        <p>From velvet sofas to cotton duvet covers, from knitted jumpers to pet beds — FurAway™ adapts to whatever you need to tackle. One tool for the whole home.</p>
+      </div>
+    </div>
 
-  <!-- EMAIL 1 — CONFIRMATION -->
-  <div class="email-card">
-    <div class="email-card-header">
-      <div class="ec-badge ecb-1">✅</div>
-      <div>
-        <div class="ec-title">Email 1 — Order Confirmation</div>
-        <div class="ec-tags">
-          <span class="ec-tag ect-timing">⏱ Immediately after purchase</span>
-          <span class="ec-tag ect-goal">🎯 Confirm + build excitement</span>
+    <div class="benefit-item">
+      <div class="benefit-num">04</div>
+      <div class="benefit-copy">
+        <h3>Lightweight Enough to Be Everywhere</h3>
+        <p>Small enough for a kitchen drawer, a car glove box, or a handbag. Because the best cleaning tool is the one you actually have to hand when you need it.</p>
+      </div>
+    </div>
+
+    <div class="benefit-item">
+      <div class="benefit-num">05</div>
+      <div class="benefit-copy">
+        <h3>Better for the Planet, Better for Your Budget</h3>
+        <p>No more buying roll after roll of disposable tape. FurAway™ lasts for years and produces zero waste. Kinder to the environment and your household budget in equal measure.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- SECTION 6 – BEFORE VS AFTER                               -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<section class="section--smoke">
+  <div class="container">
+    <span class="eyebrow">The transformation</span>
+    <h2>Before FurAway™. After FurAway™.</h2>
+    <p style="margin-bottom:32px;">
+      It's not just about removing fur. It's about how you feel in your own home.
+    </p>
+
+    <div class="ba-grid">
+      <div class="ba-card ba-before">
+        <div class="ba-label">❌ Before</div>
+        <ul class="ba-list">
+          <li><div class="dot"></div>Fur on every dark item you own</li>
+          <li><div class="dot"></div>Lint rollers that run out constantly</li>
+          <li><div class="dot"></div>Embarrassment when guests arrive</li>
+          <li><div class="dot"></div>Vacuuming the sofa every other day</li>
+          <li><div class="dot"></div>Feeling like the cleaning never ends</li>
+          <li><div class="dot"></div>Avoiding wearing black or navy</li>
+          <li><div class="dot"></div>A car seat covered in dog hair</li>
+        </ul>
+      </div>
+
+      <div class="ba-card ba-after">
+        <div class="ba-label">✅ After</div>
+        <ul class="ba-list">
+          <li><div class="dot"></div>Furniture that stays clean between cleans</li>
+          <li><div class="dot"></div>One tool that never runs out</li>
+          <li><div class="dot"></div>Guests walking in to a tidy-looking home</li>
+          <li><div class="dot"></div>A quick 60-second tidy whenever needed</li>
+          <li><div class="dot"></div>More time, less stress</li>
+          <li><div class="dot"></div>Your full wardrobe back in play</li>
+          <li><div class="dot"></div>Car seats you're not quietly ashamed of</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- SECTION 7 – WHERE CAN IT BE USED?                         -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<section>
+  <div class="container">
+    <span class="eyebrow">Where it works</span>
+    <h2>One tool for the whole home</h2>
+    <p style="margin-bottom:32px;">Wherever fur lands, FurAway™ handles it.</p>
+
+    <div class="where-grid">
+      <div class="where-item">
+        <div class="where-icon">🛋️</div>
+        <span>Sofas</span>
+      </div>
+      <div class="where-item">
+        <div class="where-icon">🛏️</div>
+        <span>Beds & Bedding</span>
+      </div>
+      <div class="where-item">
+        <div class="where-icon">👔</div>
+        <span>Clothing</span>
+      </div>
+      <div class="where-item">
+        <div class="where-icon">🐾</div>
+        <span>Pet Beds</span>
+      </div>
+      <div class="where-item">
+        <div class="where-icon">🚗</div>
+        <span>Car Seats</span>
+      </div>
+      <div class="where-item">
+        <div class="where-icon">🏡</div>
+        <span>Carpets</span>
+      </div>
+      <div class="where-item">
+        <div class="where-icon">🐱</div>
+        <span>Cats</span>
+      </div>
+      <div class="where-item">
+        <div class="where-icon">🐶</div>
+        <span>Dogs</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- SECTION 8 – HOW IT WORKS                                   -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<section class="section--sage">
+  <div class="container">
+    <span class="eyebrow">How it works</span>
+    <h2>Simple by design</h2>
+    <p style="margin-bottom:36px;">
+      No instructions manual required. But here's what to expect.
+    </p>
+
+    <!-- GIF PLACEHOLDER -->
+    <div class="img-placeholder" style="height:200px;border-radius:var(--radius-lg);margin-bottom:36px;">
+      <span class="icon">🎬</span>
+      <strong>Animated GIF / Short Video Clip</strong>
+      <span>3–5 second looping GIF showing the product in use on a sofa<br/>High-contrast fur lift visible — satisfying to watch</span>
+    </div>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-copy">
+          <h3>Place FurAway™ against the surface</h3>
+          <p>Lay it flat against the fabric — your sofa, duvet, jacket, or car seat. No prep required.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-copy">
+          <h3>Glide in either direction</h3>
+          <p>The bidirectional surface grabs pet hair on both strokes. Work over the area until it's clean — it only takes a few passes.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-copy">
+          <h3>Remove the collected fur</h3>
+          <p>Gathered fur collects in a neat bundle on the surface. Simply peel it away and dispose of it.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-copy">
+          <h3>Rinse and repeat</h3>
+          <p>When FurAway™ needs refreshing, run it under cold water for 10 seconds, let it air dry, and it's back to full performance.</p>
         </div>
       </div>
     </div>
-    <div class="email-card-body">
-      <div class="subj-box">
-        <div class="subj-label">Subject Line</div>
-        <div class="subj-line">Your FurAway™ is confirmed — it's on its way, {{first_name}} 🐾</div>
-        <div class="subj-prev">Preview: "Your sofa won't know what hit it. Here's your order summary."</div>
-      </div>
-      <div class="email-copy">Hi {{first_name}},
+  </div>
+</section>
 
-<strong>Good news — your order is confirmed and your sofa's days are numbered.</strong>
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- SECTION 9 – COMPARISON TABLE                               -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<section>
+  <div class="container">
+    <span class="eyebrow">How does it compare?</span>
+    <h2>See how FurAway™ stacks up</h2>
+    <p style="margin-bottom:32px;">
+      It's not about being fancy. It's about being the right tool for the job.
+    </p>
 
-We're getting your FurAway™ packed up right now. You'll receive a separate dispatch email with your tracking link as soon as it leaves us — usually within 1–2 working days.
-
-<strong>Your order:</strong>
-→ FurAway™ Pet Hair Remover × 2 (Buy 2 Get 1 Free)
-→ Estimated delivery: 3–5 working days
-
-<strong>One thing to try first:</strong>
-When your FurAway™ arrives, start with your sofa cushions — that's where most people have their "oh wow" moment. Short strokes work better than long ones, and you'll feel the difference within the first 30 seconds.
-
-If you have any questions before it arrives, just reply to this email — we're a small team and we actually read these.
-
-Warm regards,
-The FurAway™ Team 🐾</div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th style="text-align:left;">Feature</th>
+            <th>Lint Roller</th>
+            <th>Vacuum Cleaner</th>
+            <th class="highlight">FurAway™</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Reusable</td>
+            <td><span class="cross">✗</span></td>
+            <td><span class="tick">✓</span></td>
+            <td class="highlight"><span class="tick">✓</span></td>
+          </tr>
+          <tr>
+            <td>No batteries/power needed</td>
+            <td><span class="tick">✓</span></td>
+            <td><span class="cross">✗</span></td>
+            <td class="highlight"><span class="tick">✓</span></td>
+          </tr>
+          <tr>
+            <td>Works on clothes</td>
+            <td><span class="tick">✓</span></td>
+            <td><span class="cross">✗</span></td>
+            <td class="highlight"><span class="tick">✓</span></td>
+          </tr>
+          <tr>
+            <td>Works on furniture & sofas</td>
+            <td><span class="partial">~</span></td>
+            <td><span class="tick">✓</span></td>
+            <td class="highlight"><span class="tick">✓</span></td>
+          </tr>
+          <tr>
+            <td>Zero ongoing cost</td>
+            <td><span class="cross">✗</span></td>
+            <td><span class="tick">✓</span></td>
+            <td class="highlight"><span class="tick">✓</span></td>
+          </tr>
+          <tr>
+            <td>Compact & portable</td>
+            <td><span class="tick">✓</span></td>
+            <td><span class="cross">✗</span></td>
+            <td class="highlight"><span class="tick">✓</span></td>
+          </tr>
+          <tr>
+            <td>Eco-friendly (no waste)</td>
+            <td><span class="cross">✗</span></td>
+            <td><span class="partial">~</span></td>
+            <td class="highlight"><span class="tick">✓</span></td>
+          </tr>
+          <tr>
+            <td>Easy to clean</td>
+            <td><span class="cross">✗</span></td>
+            <td><span class="partial">~</span></td>
+            <td class="highlight"><span class="tick">✓</span></td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
+</section>
 
-  <!-- EMAIL 2 — DISPATCH -->
-  <div class="email-card">
-    <div class="email-card-header">
-      <div class="ec-badge ecb-2">📦</div>
-      <div>
-        <div class="ec-title">Email 2 — Dispatch + Pro Tips</div>
-        <div class="ec-tags">
-          <span class="ec-tag ect-timing">⏱ On dispatch</span>
-          <span class="ec-tag ect-goal">🎯 Excitement + reduce buyer's remorse</span>
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- SECTION 10 – CUSTOMER REVIEWS                              -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<section class="section--smoke">
+  <div class="container">
+    <span class="eyebrow">Real reviews from UK pet owners</span>
+    <h2>What our customers are saying</h2>
+
+    <div class="review-agg">
+      <div class="stars">★★★★★</div>
+      <div class="review-agg-text">4.9 out of 5 <span>· 2,400+ verified reviews</span></div>
+    </div>
+
+    <div class="reviews-grid">
+
+      <div class="review-card">
+        <div class="review-header">
+          <div class="reviewer-avatar">S</div>
+          <div>
+            <div class="reviewer-name">Sarah M., Manchester</div>
+            <div class="reviewer-pet">🐱 Two cats, British Shorthair</div>
+          </div>
         </div>
+        <div class="stars" style="font-size:14px;margin-bottom:8px;">★★★★★</div>
+        <p class="review-body">I was completely sceptical — I'd tried so many things. But honestly, FurAway is the first thing that's actually made a difference on my velvet sofa. It takes about a minute and the whole thing looks fresh again. My cats are horrified, I'm delighted.</p>
+        <div class="verified">✓ Verified Purchase</div>
       </div>
-    </div>
-    <div class="email-card-body">
-      <div class="subj-box">
-        <div class="subj-label">Subject Line</div>
-        <div class="subj-line">It's on its way — plus 3 tips for the best results ✨</div>
-        <div class="subj-prev">Preview: "Your FurAway™ has just left us. Here's what to try first when it arrives."</div>
-      </div>
-      <div class="email-copy">Hi {{first_name}},
 
-<strong>Your FurAway™ has been dispatched.</strong> 📦
-
-You can track your order here: [TRACKING LINK]
-
-While you wait, here are three things our best customers swear by:
-
-<strong>1. Start with the sofa — specifically the corners</strong>
-Fur embeds deepest in corners and along seams. Most people start there and can't believe what comes out.
-
-<strong>2. Short, firm strokes beat long, gentle ones</strong>
-The bidirectional surface needs a bit of pressure to grip properly. You'll get better results in less time with shorter, more deliberate strokes.
-
-<strong>3. Keep one near the front door</strong>
-A quick once-over before you leave the house is the habit most customers are glad they built. Your black coat will thank you.
-
-Your order should arrive in the next 1–3 days. We think you're going to love it — but if for any reason you don't, our 30-day guarantee means you've got nothing to lose.
-
-See you on the other side of a fur-free sofa.
-
-The FurAway™ Team 🐾</div>
-    </div>
-  </div>
-
-  <!-- EMAIL 3 — REVIEW REQUEST -->
-  <div class="email-card">
-    <div class="email-card-header">
-      <div class="ec-badge ecb-3">⭐</div>
-      <div>
-        <div class="ec-title">Email 3 — Review Request + Referral</div>
-        <div class="ec-tags">
-          <span class="ec-tag ect-timing">⏱ 7 days after estimated delivery</span>
-          <span class="ec-tag ect-goal">🎯 Reviews + referral + re-engagement</span>
+      <div class="review-card">
+        <div class="review-header">
+          <div class="reviewer-avatar">J</div>
+          <div>
+            <div class="reviewer-name">James T., Edinburgh</div>
+            <div class="reviewer-pet">🐶 Labrador, 3 years old</div>
+          </div>
         </div>
+        <div class="stars" style="font-size:14px;margin-bottom:8px;">★★★★★</div>
+        <p class="review-body">Our lab sheds like it's a full-time job. The back seat of the car was a disaster. I tried it out and couldn't believe how much fur it picked up. It's now permanently in the glove box. Absolutely brilliant.</p>
+        <div class="verified">✓ Verified Purchase</div>
       </div>
-    </div>
-    <div class="email-card-body">
-      <div class="subj-box">
-        <div class="subj-label">Subject Line</div>
-        <div class="subj-line">How's it going, {{first_name}}? (We'd love to know) ⭐</div>
-        <div class="subj-prev">Preview: "Your honest review helps other pet owners find us. It takes 60 seconds."</div>
-      </div>
-      <div class="email-copy">Hi {{first_name}},
 
-It's been about a week since your FurAway™ arrived — long enough to have had a proper go at the sofa, the car, or that jumper you'd given up on.
-
-<strong>We'd love to hear how it's going.</strong>
-
-Honest reviews from real UK pet owners are how other people like you find us. If you've got 60 seconds, we'd be grateful for yours:
-
-→ [LEAVE A REVIEW — takes 60 seconds]
-
-<strong>Know someone who could use this?</strong>
-
-If you've recommended it to a friend already (we get a lot of this), here's something a bit more official:
-
-Share your unique referral link and when they order, they get 10% off — and so do you.
-
-→ [GET MY REFERRAL LINK]
-
-Either way — thank you for choosing FurAway™. We genuinely hope it's made the fur situation at home a little bit better.
-
-Warm regards,
-The FurAway™ Team 🐾
-
-P.S. If anything wasn't right with your order, please just reply to this email and we'll sort it out straight away.</div>
-    </div>
-  </div>
-
-  <!-- EMAIL 4 — RE-ORDER / BUNDLE PUSH -->
-  <div class="email-card">
-    <div class="email-card-header">
-      <div class="ec-badge ecb-4">🔄</div>
-      <div>
-        <div class="ec-title">Email 4 — Re-Order / Gift Prompt</div>
-        <div class="ec-tags">
-          <span class="ec-tag ect-timing">⏱ 30 days after purchase</span>
-          <span class="ec-tag ect-goal">🎯 LTV · Gift purchases · Second order</span>
+      <div class="review-card">
+        <div class="review-header">
+          <div class="reviewer-avatar">R</div>
+          <div>
+            <div class="reviewer-name">Rachel B., Bristol</div>
+            <div class="reviewer-pet">🐱 Persian cat</div>
+          </div>
         </div>
+        <div class="stars" style="font-size:14px;margin-bottom:8px;">★★★★★</div>
+        <p class="review-body">Persian fur is a different kind of challenge — it embeds into everything. This is genuinely the only thing that gets it out of my bed linen properly. And not having to keep buying lint roller refills is a lovely bonus.</p>
+        <div class="verified">✓ Verified Purchase</div>
+      </div>
+
+      <div class="review-card">
+        <div class="review-header">
+          <div class="reviewer-avatar">D</div>
+          <div>
+            <div class="reviewer-name">Daniel W., London</div>
+            <div class="reviewer-pet">🐶 Golden Retriever</div>
+          </div>
+        </div>
+        <div class="stars" style="font-size:14px;margin-bottom:8px;">★★★★★</div>
+        <p class="review-body">Three FurAways in my house now — one in the bedroom, one by the sofa, one at the front door for coats before I leave the house. Best £20 I've spent. I've recommended it to literally everyone who visits and mentions the dog hair.</p>
+        <div class="verified">✓ Verified Purchase</div>
+      </div>
+
+      <div class="review-card">
+        <div class="review-header">
+          <div class="reviewer-avatar">F</div>
+          <div>
+            <div class="reviewer-name">Fiona C., Glasgow</div>
+            <div class="reviewer-pet">🐱 Ragdoll cat</div>
+          </div>
+        </div>
+        <div class="stars" style="font-size:14px;margin-bottom:8px;">★★★★★</div>
+        <p class="review-body">My mother-in-law was coming to visit and I had about 20 minutes. FurAway sorted the sofa, the armchair, and my husband's jumper. She commented on how clean the flat was. I'm calling that a win.</p>
+        <div class="verified">✓ Verified Purchase</div>
+      </div>
+
+      <div class="review-card">
+        <div class="review-header">
+          <div class="reviewer-avatar">M</div>
+          <div>
+            <div class="reviewer-name">Mark O., Birmingham</div>
+            <div class="reviewer-pet">🐶 Two Cocker Spaniels</div>
+          </div>
+        </div>
+        <div class="stars" style="font-size:14px;margin-bottom:8px;">★★★★★</div>
+        <p class="review-body">Two spaniels means double the fur and double the chaos. This handles both. It even works on their actual beds — which are in a right state most of the time. Fast, easy, no fuss. Exactly what I needed.</p>
+        <div class="verified">✓ Verified Purchase</div>
+      </div>
+
+      <div class="review-card">
+        <div class="review-header">
+          <div class="reviewer-avatar">A</div>
+          <div>
+            <div class="reviewer-name">Amelia H., Leeds</div>
+            <div class="reviewer-pet">🐱 Maine Coon</div>
+          </div>
+        </div>
+        <div class="stars" style="font-size:14px;margin-bottom:8px;">★★★★★</div>
+        <p class="review-body">Maine Coons are beautiful but they absolutely carpet everything. I bought FurAway on a whim and genuinely didn't expect it to work as well as it did. The fact that it rinses clean and you can use it again is just smart design. Love it.</p>
+        <div class="verified">✓ Verified Purchase</div>
+      </div>
+
+      <div class="review-card">
+        <div class="review-header">
+          <div class="reviewer-avatar">T</div>
+          <div>
+            <div class="reviewer-name">Thomas N., Cardiff</div>
+            <div class="reviewer-pet">🐶 Border Collie</div>
+          </div>
+        </div>
+        <div class="stars" style="font-size:14px;margin-bottom:8px;">★★★★★</div>
+        <p class="review-body">Bought it thinking it was a gimmick. Used it on the carpet. Changed my mind immediately. Border Collies shed all year round and nothing I'd tried before really worked on rugs. This does. Very impressed.</p>
+        <div class="verified">✓ Verified Purchase</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- SECTION 11 – FAQ                                           -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<section>
+  <div class="container">
+    <span class="eyebrow">Got questions?</span>
+    <h2>We thought you might</h2>
+
+    <div class="faq-item">
+      <div class="faq-q">How is FurAway™ different from a regular lint roller?</div>
+      <div class="faq-a">A lint roller uses disposable adhesive sheets that run out quickly and end up in the bin. FurAway™ uses a reusable surface that lasts for years, rinses clean under water, and never needs replacing. It's also significantly more effective on deeply embedded pet hair.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">Does it work for both cats and dogs?</div>
+      <div class="faq-a">Yes — FurAway™ works equally well on cat and dog hair, regardless of coat type. Whether your pet has short, fine hair or long, thick fur, the bidirectional surface picks it up effectively.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">What surfaces can I use it on?</div>
+      <div class="faq-a">FurAway™ is suitable for sofas, upholstered chairs, car seats, clothing (including knitwear), bedding, carpets, rugs, pet beds, and most fabric surfaces. If in doubt, test a small inconspicuous area first.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">Will it damage delicate fabrics?</div>
+      <div class="faq-a">FurAway™ has been designed to be gentle on fabrics while still being effective. It works safely on cotton, linen, polyester, velvet, and most blends. We recommend a gentle stroke on delicate fabrics such as silk.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">How do I clean it?</div>
+      <div class="faq-a">Simply rinse under cold running water for 10–15 seconds. The collected fur releases easily. Allow to air dry before storing. No detergent or special cleaning required.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">How long does it last?</div>
+      <div class="faq-a">With proper care, FurAway™ lasts for years. The surface retains its performance with regular rinsing. Unlike disposable alternatives, there's no degradation over time from normal use.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">When will my order arrive?</div>
+      <div class="faq-a">We dispatch all UK orders within 1–2 working days. Standard delivery typically takes 3–5 working days. Express delivery options are available at checkout.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">What if it doesn't work for me?</div>
+      <div class="faq-a">We offer a 30-day satisfaction guarantee. If you're not happy for any reason, simply get in touch and we'll arrange a full refund — no questions asked, no return postage required.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">Is it eco-friendly?</div>
+      <div class="faq-a">Yes. Because FurAway™ is fully reusable and produces no disposable waste, it's significantly kinder to the environment than lint rollers. One FurAway™ replaces hundreds of disposable lint roller sheets.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">Can I use it on my pet directly?</div>
+      <div class="faq-a">FurAway™ is designed for use on fabric surfaces and clothing, not for grooming your pet directly. For grooming, we'd recommend a dedicated pet brush.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">Do I need to buy one per room?</div>
+      <div class="faq-a">Many customers do keep a FurAway™ in multiple locations for convenience — by the sofa, in the bedroom, and one near the front door. They're compact enough to tuck into any drawer, and our multi-pack options make this great value.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">Is it safe to use around children?</div>
+      <div class="faq-a">Absolutely. FurAway™ contains no chemicals, adhesives, or electrical components. It's completely safe to use and store in family homes.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- SECTION 12 – OFFER                                         -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<section class="offer-section" id="offer">
+  <div class="container">
+    <span class="eyebrow eyebrow--white">Choose your bundle</span>
+    <h2>The more you save, the less you clean.</h2>
+    <p>Most customers keep one by the sofa, one in the bedroom, and one near the door. Grab a bundle and you'll never be without one when you need it.</p>
+
+    <div class="offer-cards">
+
+      <div class="offer-card">
+        <div class="offer-qty">×1</div>
+        <div class="offer-label">The Starter</div>
+        <div class="offer-price-orig">£24.99</div>
+        <div class="offer-price">£19.99</div>
+        <div class="offer-saving">Save £5</div>
+        <a href="#" class="btn">Add to Cart</a>
+      </div>
+
+      <div class="offer-card best">
+        <div class="offer-best-badge">🔥 Most Popular</div>
+        <div class="offer-qty">×2</div>
+        <div class="offer-label">Buy 2, Get 1 Free</div>
+        <div class="offer-price-orig">£49.98</div>
+        <div class="offer-price">£34.99</div>
+        <div class="offer-saving">Save £15 — You get 3 total</div>
+        <a href="#" class="btn btn--amber">Add to Cart</a>
+      </div>
+
+      <div class="offer-card">
+        <div class="offer-qty">×4</div>
+        <div class="offer-label">The Full Home</div>
+        <div class="offer-price-orig">£79.96</div>
+        <div class="offer-price">£49.99</div>
+        <div class="offer-saving">Save £30 — Best value</div>
+        <a href="#" class="btn">Add to Cart</a>
+      </div>
+
+    </div>
+
+    <div class="trust-badges" style="margin-top:32px;">
+      <div class="badge" style="background:rgba(255,255,255,0.1);border-color:rgba(255,255,255,0.15);color:#fff;">🔒 Secure Checkout</div>
+      <div class="badge" style="background:rgba(255,255,255,0.1);border-color:rgba(255,255,255,0.15);color:#fff;">📦 Free UK Delivery over £30</div>
+      <div class="badge" style="background:rgba(255,255,255,0.1);border-color:rgba(255,255,255,0.15);color:#fff;">↩️ 30-Day Returns</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- SECTION 13 – URGENCY                                       -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<section class="urgency-section">
+  <div class="container">
+    <div class="urgency-box">
+      <span class="eyebrow">Stock update</span>
+      <h2>Running low on our most popular bundle</h2>
+      <p>
+        We're a small team and our Buy 2 Get 1 Free bundle has been flying out this week. Once this batch is gone, we won't be able to guarantee delivery within the same timeframe. If you've been considering it, now is a sensible time.
+      </p>
+
+      <div class="stock-bar"><div class="stock-fill"></div></div>
+      <div class="stock-label">Only 37% of current stock remaining</div>
+
+      <div class="btn-wrap">
+        <a href="#offer" class="btn">Claim My FurAway™ Bundle →</a>
+        <span class="btn-note">Free UK delivery · 30-day guarantee</span>
       </div>
     </div>
-    <div class="email-card-body">
-      <div class="subj-box">
-        <div class="subj-label">Subject Line</div>
-        <div class="subj-line">Know any other pet owners? 🐾 (They'll thank you for this)</div>
-        <div class="subj-prev">Preview: "FurAway™ makes a genuinely useful gift for anyone with a cat or dog."</div>
-      </div>
-      <div class="email-copy">Hi {{first_name}},
+  </div>
+</section>
 
-Hope your sofa has been thoroughly reclaimed since your FurAway™ arrived.
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- SECTION 14 – FINAL CTA                                     -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<section class="final-cta">
+  <div class="container">
+    <span class="eyebrow">You deserve a cleaner home</span>
+    <h2>You love your pet. You shouldn't have to choose between them and a tidy home.</h2>
+    <p>
+      FurAway™ is for the pet owners who want both. The ones who adore their animals completely — and still want to sit on their own sofa without being covered in fur. That's not too much to ask.
+    </p>
 
-We wanted to mention — if you've got a friend, family member, or colleague who's been complaining about pet hair (you know the type), FurAway™ makes a genuinely useful gift. Not the kind that ends up in a drawer — the kind they actually use every week.
+    <div class="trust-badges">
+      <div class="badge"><span class="badge-icon">⭐</span> 4.9/5 · 2,400+ Reviews</div>
+      <div class="badge"><span class="badge-icon">🔄</span> 30-Day Guarantee</div>
+      <div class="badge"><span class="badge-icon">🇬🇧</span> UK Stock</div>
+      <div class="badge"><span class="badge-icon">🌱</span> Eco-Friendly</div>
+    </div>
 
-We offer free UK delivery on orders over £30, and our Buy 2 Get 1 Free bundle means you could grab one for a friend and still save money.
+    <div class="btn-wrap">
+      <a href="#offer" class="btn btn--amber">
+        Get My FurAway™ Now →
+        <span class="btn-sub">Join 12,000+ happy pet owners in the UK</span>
+      </a>
+      <span class="btn-note">Secure checkout · Free returns · Ships in 1–2 days</span>
+    </div>
 
-→ [SHOP FURAWAY™ BUNDLES]
-
-And if you ever need a spare for the car, the bedroom, or the in-laws' place — same link, same guarantee.
-
-Thanks again for being a FurAway™ customer, {{first_name}}. You lot are the reason we exist.
-
-The FurAway™ Team 🐾</div>
+    <!-- FINAL LIFESTYLE IMAGE -->
+    <div class="img-placeholder" style="height:280px;border-radius:var(--radius-lg);margin-top:36px;">
+      <span class="icon">📸</span>
+      <strong>Final Lifestyle Image</strong>
+      <span>Happy pet owner relaxed on fur-free sofa, pet beside them<br/>Warm, cosy, aspirational — the "after" state</span>
     </div>
   </div>
+</section>
 
-</div>
-
-
-<!-- ═══════════════════════════════════════════════ -->
-<!-- REFERRAL PROGRAMME                              -->
-<!-- ═══════════════════════════════════════════════ -->
-<div class="section-label">Referral Programme Design</div>
-
-<div class="referral-box">
-  <h2>🐾 The FurAway™ Refer-a-Friend Programme</h2>
-  <p>Word of mouth is the best marketing a DTC brand can have. Structure it properly and it compounds. Here's the recommended setup:</p>
-  <div class="referral-grid">
-    <div class="ref-card">
-      <div class="ref-icon">🎁</div>
-      <div class="ref-title">For the Referrer</div>
-      <div class="ref-desc">£5 store credit or 10% off their next order, issued automatically when their friend places an order. Simple, trackable, frictionless.</div>
-    </div>
-    <div class="ref-card">
-      <div class="ref-icon">🏷️</div>
-      <div class="ref-title">For the New Customer</div>
-      <div class="ref-desc">10% off their first order via unique referral link. Strong incentive to actually use the link rather than just visiting directly.</div>
-    </div>
-    <div class="ref-card">
-      <div class="ref-icon">📱</div>
-      <div class="ref-title">Trigger Points</div>
-      <div class="ref-desc">Introduce in: Thank You Page share buttons, Review Request email (Day 7), and a dedicated referral page linked from the footer.</div>
-    </div>
-    <div class="ref-card">
-      <div class="ref-icon">⚙️</div>
-      <div class="ref-title">Recommended Tool</div>
-      <div class="ref-desc">ReferralCandy, Smile.io, or LoyaltyLion all integrate with Shopify. Set up takes under 2 hours. Minimal ongoing cost relative to CAC savings.</div>
-    </div>
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- FOOTER                                                     -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<footer>
+  <div class="footer-logo">Fur<em>Away</em>™</div>
+  <div class="footer-links">
+    <a href="#">Privacy Policy</a>
+    <a href="#">Terms & Conditions</a>
+    <a href="#">Shipping Policy</a>
+    <a href="#">Returns</a>
+    <a href="#">Contact Us</a>
   </div>
-</div>
+  <p>© 2025 FurAway™. All rights reserved. Registered in England & Wales.</p>
+  <p style="margin-top:8px;">Made with ♥ for pet owners across the United Kingdom.</p>
+</footer>
 
-
-<!-- ═══════════════════════════════════════════════ -->
-<!-- STRATEGY NOTES                                  -->
-<!-- ═══════════════════════════════════════════════ -->
-<div class="section-label">Strategy & CRO Notes</div>
-
-<div class="notes-grid">
-  <div class="note-card">
-    <h3>🎯 OTO Conversion Tips</h3>
-    <ul>
-      <li>The car upsell works because it's a genuinely different use case — not just "buy more of the same"</li>
-      <li>Decline button copy: "No thanks — I don't need it for the car" — makes declining feel like a concession, not just a button press</li>
-      <li>Timer is real — set to 15 minutes in Shopify post-purchase. Creates urgency without dishonesty</li>
-      <li>Target AOV lift: £11.99 add-on on a £34.99 order = 34% AOV increase on converting customers</li>
-      <li>Test a second OTO: a set of microfibre cloths or a pet hair travel kit at £8.99</li>
-    </ul>
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- STICKY CTA BAR (mobile)                                    -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<div class="sticky-cta" id="stickyCta" style="display:none;">
+  <div class="sticky-cta-left">
+    FurAway™
+    <span>4.9 ★ · 2,400+ reviews</span>
   </div>
-  <div class="note-card">
-    <h3>📧 Email Flow Metrics</h3>
-    <ul>
-      <li>Confirmation email (Email 1): target 65–75% open rate — transactional emails have the highest open rate of any sequence</li>
-      <li>Dispatch email (Email 2): target 55–65% open rate — customers are actively waiting for their order</li>
-      <li>Review request (Email 3): target 35–45% open rate · 8–15% click rate · 20–30% review completion</li>
-      <li>Re-order email (Email 4): target 25–35% open rate · 4–8% click rate</li>
-      <li>All four emails should be set as "transactional" in Klaviyo to bypass marketing unsubscribes</li>
-    </ul>
-  </div>
-  <div class="note-card">
-    <h3>🛠 Shopify Implementation</h3>
-    <ul>
-      <li>Thank You Page customisation: use ReConvert or Zipify Pages for full post-purchase page control</li>
-      <li>OTO (post-purchase upsell): AfterSell or Zipify OCU — both integrate natively with Shopify checkout</li>
-      <li>Email flow: Klaviyo — create a "Fulfilled Order" flow for dispatch email, "Placed Order" for confirmation</li>
-      <li>Review collection: Judge.me or Okendo — both auto-trigger review request emails on schedule</li>
-      <li>Referral: ReferralCandy or Smile.io — embed referral widget into Thank You Page</li>
-    </ul>
-  </div>
-  <div class="note-card">
-    <h3>💰 Revenue Impact Estimates</h3>
-    <ul>
-      <li>OTO conversion rate (cold traffic): typically 8–18% of buyers accept a post-purchase upsell</li>
-      <li>At 12% OTO uptake on 100 orders/month: +£143.88 additional revenue, zero extra ad spend</li>
-      <li>Review emails generating 25 reviews/month compound into significantly lower CAC over time (social proof flywheel)</li>
-      <li>Referral programme at 5% referral rate: every 20 customers generates 1 new customer for near-zero cost</li>
-      <li>Combined: post-purchase sequence can add 15–25% to total monthly revenue with no additional ad spend</li>
-    </ul>
-  </div>
-</div>
-
+  <a href="#offer" class="btn btn--amber">Get My Bundle →</a>
 </div>
 
 <script>
-  // Real countdown timer for OTO
-  let total = 14 * 60 + 59;
-  const minsEl = document.getElementById('mins');
-  const secsEl = document.getElementById('secs');
-  const tick = setInterval(() => {
-    if (total <= 0) { clearInterval(tick); return; }
-    total--;
-    const m = Math.floor(total / 60);
-    const s = total % 60;
-    minsEl.textContent = String(m).padStart(2, '0');
-    secsEl.textContent = String(s).padStart(2, '0');
-  }, 1000);
+  // Show sticky CTA after scrolling past hero
+  const hero = document.querySelector('.hero');
+  const stickyCta = document.getElementById('stickyCta');
+  const observer = new IntersectionObserver(([entry]) => {
+    stickyCta.style.display = entry.isIntersecting ? 'none' : 'flex';
+  }, { threshold: 0 });
+  observer.observe(hero);
 </script>
 
 </body>
