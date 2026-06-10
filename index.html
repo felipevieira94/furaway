@@ -1,0 +1,1026 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>FurAway™ — Post-Purchase Sequence</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --ink:        #1a1a1a;
+  --smoke:      #f7f6f3;
+  --white:      #fff;
+  --sage:       #3d6b55;
+  --sage-light: #eef4f0;
+  --sage-mid:   #5a8c70;
+  --amber:      #c2813b;
+  --amber-dark: #a86e2f;
+  --mist:       #e8e6e1;
+  --soft:       #5a5a5a;
+  --gold:       #d4a843;
+  --font-disp:  'Playfair Display', Georgia, serif;
+  --font-body:  'Inter', system-ui, sans-serif;
+  --radius:     12px;
+  --radius-lg:  20px;
+  --shadow:     0 4px 24px rgba(0,0,0,0.08);
+  --shadow-lg:  0 12px 48px rgba(0,0,0,0.14);
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: var(--font-body); background: #dedad4; color: var(--ink); -webkit-font-smoothing: antialiased; }
+
+/* PAGE */
+.page { max-width: 980px; margin: 0 auto; padding: 0 16px 80px; }
+
+/* HEADER */
+.page-header {
+  background: var(--sage);
+  padding: 28px 32px;
+  margin-bottom: 32px;
+  border-radius: 0 0 var(--radius) var(--radius);
+}
+.page-header h1 { font-family: var(--font-disp); font-size: 22px; font-weight: 900; color: #fff; margin-bottom: 4px; }
+.page-header h1 em { color: #a8dfbe; font-style: normal; }
+.page-header p { font-size: 13px; color: rgba(255,255,255,0.6); }
+
+/* SECTION LABEL */
+.section-label {
+  font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--soft); margin: 40px 0 16px;
+  display: flex; align-items: center; gap: 10px;
+}
+.section-label::after { content: ''; flex: 1; height: 1px; background: var(--mist); }
+
+/* FUNNEL MAP */
+.funnel-map {
+  background: var(--white);
+  border: 1px solid var(--mist);
+  border-radius: var(--radius-lg);
+  padding: 28px 24px;
+  margin-bottom: 36px;
+  box-shadow: var(--shadow);
+}
+.funnel-map h2 { font-family: var(--font-disp); font-size: 18px; font-weight: 900; margin-bottom: 20px; color: var(--sage); }
+.funnel-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+.funnel-step {
+  display: grid;
+  grid-template-columns: 48px 1fr;
+  gap: 16px;
+  padding: 16px 0;
+  border-bottom: 1px dashed var(--mist);
+  align-items: center;
+}
+.funnel-step:last-child { border-bottom: none; }
+.f-icon {
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px; flex-shrink: 0;
+}
+.fi-1 { background: #fff3cd; }
+.fi-2 { background: var(--sage-light); }
+.fi-3 { background: #e8f0ff; }
+.fi-4 { background: #fff0f3; }
+.fi-5 { background: #f5f0ff; }
+.f-title { font-weight: 700; font-size: 14px; }
+.f-desc { font-size: 12px; color: var(--soft); margin-top: 2px; }
+.f-timing {
+  font-size: 10px; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase;
+  color: var(--amber); background: #fff3e8; padding: 2px 8px; border-radius: 999px;
+  margin-left: auto; flex-shrink: 0;
+}
+
+/* ═══════════════════════════════════════ */
+/* THANK YOU PAGE                          */
+/* ═══════════════════════════════════════ */
+.ty-page {
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+  margin-bottom: 40px;
+}
+
+/* top confetti bar */
+.ty-celebrate {
+  background: linear-gradient(135deg, var(--sage) 0%, #2d5240 100%);
+  padding: 36px 32px 32px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.ty-celebrate::before {
+  content: '🎉🐾✨🎊🐱🐶🎉';
+  position: absolute;
+  top: 8px; left: 0; right: 0;
+  font-size: 20px;
+  opacity: 0.25;
+  letter-spacing: 8px;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.ty-checkmark {
+  width: 64px; height: 64px;
+  background: rgba(255,255,255,0.15);
+  border: 3px solid rgba(255,255,255,0.4);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 28px;
+  margin: 0 auto 16px;
+}
+.ty-celebrate h1 {
+  font-family: var(--font-disp);
+  font-size: clamp(24px, 6vw, 36px);
+  font-weight: 900;
+  color: #fff;
+  margin-bottom: 10px;
+  line-height: 1.15;
+}
+.ty-celebrate p {
+  font-size: 16px;
+  color: rgba(255,255,255,0.8);
+  max-width: 440px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+.order-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 999px;
+  padding: 8px 18px;
+  font-size: 13px;
+  font-weight: 600;
+  color: rgba(255,255,255,0.85);
+  margin-top: 18px;
+}
+
+/* order summary */
+.ty-order {
+  padding: 28px 32px;
+  border-bottom: 1px solid var(--mist);
+}
+.ty-order h3 {
+  font-family: var(--font-disp);
+  font-size: 17px;
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+.order-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--mist);
+}
+.order-item:last-child { border-bottom: none; }
+.order-img {
+  width: 56px; height: 56px;
+  background: var(--smoke);
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 24px; flex-shrink: 0;
+}
+.order-name { font-weight: 700; font-size: 14px; margin-bottom: 2px; }
+.order-meta { font-size: 12px; color: var(--soft); }
+.order-price { margin-left: auto; font-weight: 700; font-size: 15px; }
+
+/* what happens next */
+.ty-next {
+  padding: 28px 32px;
+  border-bottom: 1px solid var(--mist);
+  background: var(--smoke);
+}
+.ty-next h3 { font-family: var(--font-disp); font-size: 17px; font-weight: 700; margin-bottom: 18px; }
+.next-steps { display: flex; flex-direction: column; gap: 14px; }
+.next-step {
+  display: flex; align-items: flex-start; gap: 14px;
+}
+.ns-dot {
+  width: 32px; height: 32px;
+  background: var(--sage);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  color: #fff; font-size: 13px; font-weight: 700;
+  flex-shrink: 0; margin-top: 2px;
+}
+.ns-title { font-size: 14px; font-weight: 700; margin-bottom: 2px; }
+.ns-desc { font-size: 13px; color: var(--soft); line-height: 1.55; }
+
+/* share section */
+.ty-share {
+  padding: 28px 32px;
+  border-bottom: 1px solid var(--mist);
+  text-align: center;
+}
+.ty-share h3 { font-family: var(--font-disp); font-size: 17px; font-weight: 700; margin-bottom: 8px; }
+.ty-share p { font-size: 14px; color: var(--soft); margin-bottom: 20px; }
+.share-btns { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+.share-btn {
+  display: flex; align-items: center; gap: 8px;
+  padding: 10px 18px;
+  border-radius: 999px;
+  font-size: 13px; font-weight: 700;
+  border: none; cursor: pointer;
+  transition: opacity 0.15s;
+}
+.share-btn:hover { opacity: 0.85; }
+.sb-fb { background: #1877f2; color: #fff; }
+.sb-tt { background: #010101; color: #fff; }
+.sb-wa { background: #25d366; color: #fff; }
+.sb-copy { background: var(--smoke); border: 1px solid var(--mist); color: var(--ink); }
+
+/* how to use */
+.ty-howto {
+  padding: 28px 32px;
+}
+.ty-howto h3 { font-family: var(--font-disp); font-size: 17px; font-weight: 700; margin-bottom: 16px; }
+.howto-steps { display: grid; gap: 14px; grid-template-columns: 1fr; }
+@media(min-width:480px){ .howto-steps { grid-template-columns: 1fr 1fr; } }
+.howto-step {
+  background: var(--sage-light);
+  border-radius: var(--radius);
+  padding: 16px;
+  display: flex; gap: 12px; align-items: flex-start;
+}
+.hs-num {
+  width: 28px; height: 28px;
+  background: var(--sage);
+  border-radius: 50%;
+  color: #fff;
+  font-family: var(--font-disp);
+  font-weight: 900; font-size: 14px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.hs-title { font-size: 13px; font-weight: 700; margin-bottom: 3px; }
+.hs-desc { font-size: 12px; color: var(--soft); line-height: 1.5; }
+
+
+/* ═══════════════════════════════════════ */
+/* OTO — ONE TIME OFFER / UPSELL PAGE     */
+/* ═══════════════════════════════════════ */
+.oto-page {
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+  margin-bottom: 40px;
+}
+
+.oto-hero {
+  background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+  padding: 36px 32px;
+  text-align: center;
+}
+.oto-eyebrow {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: var(--amber);
+  color: #fff;
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  padding: 6px 16px; border-radius: 999px;
+  margin-bottom: 18px;
+}
+.oto-hero h1 {
+  font-family: var(--font-disp);
+  font-size: clamp(22px, 5vw, 34px);
+  font-weight: 900;
+  color: #fff;
+  line-height: 1.2;
+  margin-bottom: 12px;
+}
+.oto-hero h1 em { color: var(--gold); font-style: normal; }
+.oto-hero p { font-size: 15px; color: rgba(255,255,255,0.7); line-height: 1.65; max-width: 440px; margin: 0 auto; }
+
+/* timer */
+.oto-timer-wrap {
+  background: rgba(194,129,59,0.15);
+  border: 1px solid rgba(194,129,59,0.3);
+  border-radius: 10px;
+  padding: 14px 20px;
+  margin: 20px auto 0;
+  max-width: 360px;
+  text-align: center;
+}
+.oto-timer-label { font-size: 11px; font-weight: 700; color: var(--amber); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 8px; }
+.oto-timer {
+  display: flex; justify-content: center; gap: 6px; align-items: center;
+}
+.oto-timer-unit {
+  background: rgba(255,255,255,0.08);
+  border-radius: 6px;
+  padding: 8px 12px;
+  text-align: center;
+  min-width: 48px;
+}
+.otu-num { font-family: var(--font-disp); font-size: 24px; font-weight: 900; color: #fff; line-height: 1; }
+.otu-label { font-size: 9px; color: rgba(255,255,255,0.4); letter-spacing: 0.07em; text-transform: uppercase; margin-top: 2px; }
+.oto-colon { font-size: 22px; font-weight: 700; color: var(--amber); }
+
+/* oto product */
+.oto-product {
+  padding: 28px 32px;
+  border-bottom: 1px solid var(--mist);
+}
+.oto-product-layout {
+  display: grid;
+  gap: 28px;
+  align-items: center;
+}
+@media(min-width:540px){ .oto-product-layout { grid-template-columns: 140px 1fr; } }
+.oto-product-img {
+  height: 140px;
+  background: var(--smoke);
+  border-radius: var(--radius);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 52px;
+  box-shadow: var(--shadow);
+}
+.oto-product-name { font-family: var(--font-disp); font-size: 20px; font-weight: 900; margin-bottom: 8px; }
+.oto-product-tagline { font-size: 14px; color: var(--soft); margin-bottom: 14px; line-height: 1.6; }
+.oto-price-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 14px; }
+.oto-price-orig { font-size: 16px; color: #aaa; text-decoration: line-through; }
+.oto-price-new { font-size: 26px; font-weight: 900; font-family: var(--font-disp); color: var(--sage); }
+.oto-save-badge {
+  background: var(--sage-light);
+  border: 1px solid #c2d9ca;
+  color: var(--sage);
+  font-size: 12px; font-weight: 700;
+  padding: 4px 12px; border-radius: 999px;
+}
+.oto-bullets { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+.oto-bullets li {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 13px; color: var(--ink);
+}
+.ob-check {
+  width: 20px; height: 20px;
+  background: var(--sage); border-radius: 50%;
+  color: #fff; font-size: 10px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+
+/* oto why */
+.oto-why {
+  padding: 24px 32px;
+  background: var(--smoke);
+  border-bottom: 1px solid var(--mist);
+}
+.oto-why h3 { font-family: var(--font-disp); font-size: 17px; font-weight: 700; margin-bottom: 14px; }
+.oto-why p { font-size: 14px; color: var(--soft); line-height: 1.75; margin-bottom: 10px; }
+
+/* oto cta */
+.oto-cta {
+  padding: 28px 32px;
+  text-align: center;
+}
+.btn-oto {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  background: var(--amber);
+  color: #fff;
+  font-family: var(--font-body);
+  font-size: 17px; font-weight: 700;
+  padding: 18px 36px;
+  border-radius: 999px;
+  border: none; cursor: pointer;
+  width: 100%; max-width: 420px;
+  transition: background 0.2s, transform 0.15s;
+  letter-spacing: 0.01em;
+  line-height: 1.3;
+}
+.btn-oto:hover { background: var(--amber-dark); transform: translateY(-1px); }
+.btn-oto-sub { font-size: 12px; font-weight: 400; opacity: 0.85; margin-top: 4px; }
+.oto-decline {
+  display: block;
+  margin-top: 14px;
+  font-size: 12px; color: #bbb;
+  cursor: pointer; background: none; border: none;
+  font-family: var(--font-body);
+  text-decoration: underline; text-underline-offset: 2px;
+  text-align: center; width: 100%;
+}
+.oto-decline:hover { color: var(--soft); }
+.oto-trust { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; margin-top: 16px; }
+.oto-trust-item { font-size: 12px; font-weight: 600; color: var(--soft); display: flex; align-items: center; gap: 4px; }
+
+
+/* ═══════════════════════════════════════ */
+/* POST-PURCHASE EMAIL FLOW               */
+/* ═══════════════════════════════════════ */
+.email-flow {
+  display: grid;
+  gap: 20px;
+}
+.email-card {
+  background: var(--white);
+  border: 1px solid var(--mist);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+.email-card-header {
+  padding: 18px 24px;
+  display: flex; align-items: flex-start; gap: 14px; flex-wrap: wrap;
+}
+.ec-badge {
+  width: 40px; height: 40px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px; flex-shrink: 0;
+}
+.ecb-1 { background: var(--sage-light); }
+.ecb-2 { background: #e8f0ff; }
+.ecb-3 { background: #fff3e8; }
+.ecb-4 { background: #f5f0ff; }
+.ec-title { font-family: var(--font-disp); font-size: 16px; font-weight: 900; margin-bottom: 4px; }
+.ec-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.ec-tag {
+  font-size: 10px; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase;
+  padding: 3px 9px; border-radius: 999px;
+}
+.ect-timing { background: #fff3e8; color: var(--amber); }
+.ect-goal   { background: var(--sage-light); color: var(--sage); }
+.email-card-body { padding: 0 24px 24px; }
+
+.subj-box {
+  background: var(--smoke);
+  border: 1px solid var(--mist);
+  border-left: 3px solid var(--amber);
+  border-radius: var(--radius);
+  padding: 12px 14px;
+  margin-bottom: 14px;
+}
+.subj-label { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--soft); margin-bottom: 6px; }
+.subj-line { font-size: 14px; font-weight: 700; color: var(--ink); }
+.subj-prev { font-size: 12px; color: #bbb; margin-top: 3px; }
+
+.email-copy {
+  background: #fafafa;
+  border: 1px solid var(--mist);
+  border-radius: var(--radius);
+  padding: 20px;
+  font-size: 14px;
+  line-height: 1.8;
+  color: var(--soft);
+  white-space: pre-wrap;
+}
+.email-copy strong { color: var(--ink); }
+
+
+/* ═══════════════════════════════════════ */
+/* REFERRAL SECTION                        */
+/* ═══════════════════════════════════════ */
+.referral-box {
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  padding: 32px;
+  box-shadow: var(--shadow);
+  margin-bottom: 40px;
+}
+.referral-box h2 { font-family: var(--font-disp); font-size: 22px; font-weight: 900; margin-bottom: 12px; }
+.referral-box p { font-size: 14px; color: var(--soft); margin-bottom: 20px; line-height: 1.7; }
+.referral-grid { display: grid; gap: 14px; }
+@media(min-width:540px){ .referral-grid { grid-template-columns: 1fr 1fr; } }
+.ref-card {
+  background: var(--smoke);
+  border: 1px solid var(--mist);
+  border-radius: var(--radius);
+  padding: 20px;
+}
+.ref-icon { font-size: 28px; margin-bottom: 10px; }
+.ref-title { font-size: 14px; font-weight: 700; margin-bottom: 6px; }
+.ref-desc { font-size: 13px; color: var(--soft); line-height: 1.55; }
+
+/* STRATEGY NOTES */
+.notes-grid { display: grid; gap: 14px; }
+@media(min-width:540px){ .notes-grid { grid-template-columns: 1fr 1fr; } }
+.note-card {
+  background: var(--white);
+  border: 1px solid var(--mist);
+  border-radius: var(--radius);
+  padding: 20px;
+  box-shadow: var(--shadow);
+}
+.note-card h3 { font-size: 14px; font-weight: 700; margin-bottom: 10px; }
+.note-card ul { padding-left: 16px; display: flex; flex-direction: column; gap: 6px; }
+.note-card li { font-size: 13px; color: var(--soft); line-height: 1.55; }
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- HEADER -->
+<div class="page-header">
+  <h1>Fur<em>Away</em>™ — Post-Purchase Sequence</h1>
+  <p>Thank You Page · One-Time Offer · Post-Purchase Email Flow · Referral Programme</p>
+</div>
+
+<!-- FUNNEL MAP -->
+<div class="funnel-map">
+  <h2>📍 The Post-Purchase Funnel</h2>
+  <div class="funnel-steps">
+    <div class="funnel-step">
+      <div class="f-icon fi-1">✅</div>
+      <div>
+        <div class="f-title">1. Thank You Page</div>
+        <div class="f-desc">Confirms the order, builds trust, sets expectations, and plants the seed for the upsell</div>
+      </div>
+      <div class="f-timing">Immediately</div>
+    </div>
+    <div class="funnel-step">
+      <div class="f-icon fi-2">🎁</div>
+      <div>
+        <div class="f-title">2. One-Time Upsell Offer (OTO)</div>
+        <div class="f-desc">Limited-time add-on shown immediately after purchase — increases AOV by 25–40%</div>
+      </div>
+      <div class="f-timing">Same session</div>
+    </div>
+    <div class="funnel-step">
+      <div class="f-icon fi-3">📧</div>
+      <div>
+        <div class="f-title">3. Confirmation Email</div>
+        <div class="f-desc">Order confirmed, how-to guide, builds excitement before the product arrives</div>
+      </div>
+      <div class="f-timing">Immediately</div>
+    </div>
+    <div class="funnel-step">
+      <div class="f-icon fi-4">📦</div>
+      <div>
+        <div class="f-title">4. Dispatch Email + Tips</div>
+        <div class="f-desc">Shipped notification + pro tips to get the best results on day one</div>
+      </div>
+      <div class="f-timing">On dispatch</div>
+    </div>
+    <div class="funnel-step">
+      <div class="f-icon fi-5">⭐</div>
+      <div>
+        <div class="f-title">5. Review Request + Referral</div>
+        <div class="f-desc">Request a review + introduce referral programme for organic growth</div>
+      </div>
+      <div class="f-timing">7 days post-delivery</div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- STEP 1 — THANK YOU PAGE                         -->
+<!-- ═══════════════════════════════════════════════ -->
+<div class="section-label">Step 1 — Thank You Page</div>
+
+<div class="ty-page">
+
+  <!-- Hero celebration -->
+  <div class="ty-celebrate">
+    <div class="ty-checkmark">✓</div>
+    <h1>Order confirmed.<br/>Your sofa's days are numbered, {{first_name}}.</h1>
+    <p>You've just made the best decision your furniture has ever witnessed. FurAway™ is on its way.</p>
+    <div class="order-badge">📦 Order #FW-28471 · Estimated delivery: 3–5 working days</div>
+  </div>
+
+  <!-- Order summary -->
+  <div class="ty-order">
+    <h3>Your Order</h3>
+    <div class="order-item">
+      <div class="order-img">🐾</div>
+      <div>
+        <div class="order-name">FurAway™ Pet Hair Remover × 2</div>
+        <div class="order-meta">Buy 2 Get 1 Free Bundle · Sage Green</div>
+      </div>
+      <div class="order-price">£34.99</div>
+    </div>
+    <div class="order-item">
+      <div class="order-img">🚚</div>
+      <div>
+        <div class="order-name">Standard UK Delivery</div>
+        <div class="order-meta">3–5 working days · Tracked</div>
+      </div>
+      <div class="order-price" style="color:var(--sage);">FREE</div>
+    </div>
+  </div>
+
+  <!-- What happens next -->
+  <div class="ty-next">
+    <h3>What happens next</h3>
+    <div class="next-steps">
+      <div class="next-step">
+        <div class="ns-dot">1</div>
+        <div>
+          <div class="ns-title">Confirmation email on its way</div>
+          <div class="ns-desc">We've sent a confirmation to your email address with your order details and tracking link.</div>
+        </div>
+      </div>
+      <div class="next-step">
+        <div class="ns-dot">2</div>
+        <div>
+          <div class="ns-title">We'll dispatch within 1–2 working days</div>
+          <div class="ns-desc">We ship from the UK. You'll receive a dispatch email with your tracking number as soon as it leaves us.</div>
+        </div>
+      </div>
+      <div class="next-step">
+        <div class="ns-dot">3</div>
+        <div>
+          <div class="ns-title">Your FurAway™ arrives in 3–5 days</div>
+          <div class="ns-desc">Once it arrives, you'll be genuinely amazed at what it picks up in the first 60 seconds. We've included a quick-start guide in the box.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- How to use -->
+  <div class="ty-howto">
+    <h3>Get the best results from day one</h3>
+    <div class="howto-steps">
+      <div class="howto-step">
+        <div class="hs-num">1</div>
+        <div>
+          <div class="hs-title">Place flat on the surface</div>
+          <div class="hs-desc">Lay FurAway™ against any fabric — sofa, clothing, or bedding. No prep needed.</div>
+        </div>
+      </div>
+      <div class="howto-step">
+        <div class="hs-num">2</div>
+        <div>
+          <div class="hs-title">Glide in short strokes</div>
+          <div class="hs-desc">Works in both directions. Short strokes are more effective than long sweeps.</div>
+        </div>
+      </div>
+      <div class="howto-step">
+        <div class="hs-num">3</div>
+        <div>
+          <div class="hs-title">Remove collected fur</div>
+          <div class="hs-desc">Peel the gathered fur from the surface — it bundles up satisfyingly into one clump.</div>
+        </div>
+      </div>
+      <div class="howto-step">
+        <div class="hs-num">4</div>
+        <div>
+          <div class="hs-title">Rinse to reset</div>
+          <div class="hs-desc">Under cold water for 10 seconds. Air dry. It's ready to use again immediately.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Share -->
+  <div class="ty-share">
+    <h3>Know another pet owner who'd love this?</h3>
+    <p>Share FurAway™ and help a fellow dog or cat owner reclaim their sofa.</p>
+    <div class="share-btns">
+      <button class="share-btn sb-fb">📘 Facebook</button>
+      <button class="share-btn sb-tt">🎵 TikTok</button>
+      <button class="share-btn sb-wa">💬 WhatsApp</button>
+      <button class="share-btn sb-copy">🔗 Copy Link</button>
+    </div>
+  </div>
+
+</div>
+
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- STEP 2 — ONE TIME OFFER (UPSELL)                -->
+<!-- ═══════════════════════════════════════════════ -->
+<div class="section-label">Step 2 — One-Time Upsell Offer (OTO)</div>
+
+<div class="oto-page">
+
+  <div class="oto-hero">
+    <div class="oto-eyebrow">⚡ One-Time Offer — This Page Only</div>
+    <h1>Add a <em>Spare FurAway™</em><br/>for the Car — at 40% Off.</h1>
+    <p>Most customers wish they'd ordered one for the car at the same time. Here's your chance — at a price we can only offer right now, while your order is still being processed.</p>
+
+    <!-- Countdown timer -->
+    <div class="oto-timer-wrap">
+      <div class="oto-timer-label">⏳ This offer expires in</div>
+      <div class="oto-timer">
+        <div class="oto-timer-unit"><div class="otu-num" id="mins">14</div><div class="otu-label">mins</div></div>
+        <div class="oto-colon">:</div>
+        <div class="oto-timer-unit"><div class="otu-num" id="secs">59</div><div class="otu-label">secs</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="oto-product">
+    <div class="oto-product-layout">
+      <div class="oto-product-img">🚗</div>
+      <div>
+        <div class="oto-product-name">FurAway™ — Car Edition</div>
+        <div class="oto-product-tagline">The same FurAway™ you just ordered — sized and designed to live in your glove box permanently. Tackles dog hair on car seats and boot liners in seconds.</div>
+        <div class="oto-price-row">
+          <span class="oto-price-orig">£19.99</span>
+          <span class="oto-price-new">£11.99</span>
+          <span class="oto-save-badge">Save 40%</span>
+        </div>
+        <ul class="oto-bullets">
+          <li><div class="ob-check">✓</div> Compact — fits in any glove box or door pocket</li>
+          <li><div class="ob-check">✓</div> Works on all car seat fabrics including velour</li>
+          <li><div class="ob-check">✓</div> Ships with your existing order — no extra delivery cost</li>
+          <li><div class="ob-check">✓</div> 40% off — only available on this page, right now</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="oto-why">
+    <h3>Why now? And why the car?</h3>
+    <p>Every dog owner we speak to tells us the same thing: "I use it everywhere at home — but the car is the one place I always forget." The back seat after a walk. The boot after the beach. The passenger seat when your dog decides it's their seat now.</p>
+    <p>We can add it to your existing order right now at 40% off — because the packaging is already sorted and the delivery cost is already covered. Once this page is gone, the discount goes with it.</p>
+  </div>
+
+  <div class="oto-cta">
+    <button class="btn-oto">
+      Yes — Add Car Edition for £11.99 →
+      <span class="btn-oto-sub">Ships with your order · No extra delivery · 40% off today only</span>
+    </button>
+    <button class="oto-decline">No thanks — I don't need it for the car</button>
+    <div class="oto-trust">
+      <span class="oto-trust-item">🔒 One click — added to your existing order</span>
+      <span class="oto-trust-item">📦 Same delivery, no extra shipping</span>
+      <span class="oto-trust-item">↩️ 30-day guarantee</span>
+    </div>
+  </div>
+
+</div>
+
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- POST-PURCHASE EMAIL FLOW                        -->
+<!-- ═══════════════════════════════════════════════ -->
+<div class="section-label">Steps 3–5 — Post-Purchase Email Flow</div>
+
+<div class="email-flow">
+
+  <!-- EMAIL 1 — CONFIRMATION -->
+  <div class="email-card">
+    <div class="email-card-header">
+      <div class="ec-badge ecb-1">✅</div>
+      <div>
+        <div class="ec-title">Email 1 — Order Confirmation</div>
+        <div class="ec-tags">
+          <span class="ec-tag ect-timing">⏱ Immediately after purchase</span>
+          <span class="ec-tag ect-goal">🎯 Confirm + build excitement</span>
+        </div>
+      </div>
+    </div>
+    <div class="email-card-body">
+      <div class="subj-box">
+        <div class="subj-label">Subject Line</div>
+        <div class="subj-line">Your FurAway™ is confirmed — it's on its way, {{first_name}} 🐾</div>
+        <div class="subj-prev">Preview: "Your sofa won't know what hit it. Here's your order summary."</div>
+      </div>
+      <div class="email-copy">Hi {{first_name}},
+
+<strong>Good news — your order is confirmed and your sofa's days are numbered.</strong>
+
+We're getting your FurAway™ packed up right now. You'll receive a separate dispatch email with your tracking link as soon as it leaves us — usually within 1–2 working days.
+
+<strong>Your order:</strong>
+→ FurAway™ Pet Hair Remover × 2 (Buy 2 Get 1 Free)
+→ Estimated delivery: 3–5 working days
+
+<strong>One thing to try first:</strong>
+When your FurAway™ arrives, start with your sofa cushions — that's where most people have their "oh wow" moment. Short strokes work better than long ones, and you'll feel the difference within the first 30 seconds.
+
+If you have any questions before it arrives, just reply to this email — we're a small team and we actually read these.
+
+Warm regards,
+The FurAway™ Team 🐾</div>
+    </div>
+  </div>
+
+  <!-- EMAIL 2 — DISPATCH -->
+  <div class="email-card">
+    <div class="email-card-header">
+      <div class="ec-badge ecb-2">📦</div>
+      <div>
+        <div class="ec-title">Email 2 — Dispatch + Pro Tips</div>
+        <div class="ec-tags">
+          <span class="ec-tag ect-timing">⏱ On dispatch</span>
+          <span class="ec-tag ect-goal">🎯 Excitement + reduce buyer's remorse</span>
+        </div>
+      </div>
+    </div>
+    <div class="email-card-body">
+      <div class="subj-box">
+        <div class="subj-label">Subject Line</div>
+        <div class="subj-line">It's on its way — plus 3 tips for the best results ✨</div>
+        <div class="subj-prev">Preview: "Your FurAway™ has just left us. Here's what to try first when it arrives."</div>
+      </div>
+      <div class="email-copy">Hi {{first_name}},
+
+<strong>Your FurAway™ has been dispatched.</strong> 📦
+
+You can track your order here: [TRACKING LINK]
+
+While you wait, here are three things our best customers swear by:
+
+<strong>1. Start with the sofa — specifically the corners</strong>
+Fur embeds deepest in corners and along seams. Most people start there and can't believe what comes out.
+
+<strong>2. Short, firm strokes beat long, gentle ones</strong>
+The bidirectional surface needs a bit of pressure to grip properly. You'll get better results in less time with shorter, more deliberate strokes.
+
+<strong>3. Keep one near the front door</strong>
+A quick once-over before you leave the house is the habit most customers are glad they built. Your black coat will thank you.
+
+Your order should arrive in the next 1–3 days. We think you're going to love it — but if for any reason you don't, our 30-day guarantee means you've got nothing to lose.
+
+See you on the other side of a fur-free sofa.
+
+The FurAway™ Team 🐾</div>
+    </div>
+  </div>
+
+  <!-- EMAIL 3 — REVIEW REQUEST -->
+  <div class="email-card">
+    <div class="email-card-header">
+      <div class="ec-badge ecb-3">⭐</div>
+      <div>
+        <div class="ec-title">Email 3 — Review Request + Referral</div>
+        <div class="ec-tags">
+          <span class="ec-tag ect-timing">⏱ 7 days after estimated delivery</span>
+          <span class="ec-tag ect-goal">🎯 Reviews + referral + re-engagement</span>
+        </div>
+      </div>
+    </div>
+    <div class="email-card-body">
+      <div class="subj-box">
+        <div class="subj-label">Subject Line</div>
+        <div class="subj-line">How's it going, {{first_name}}? (We'd love to know) ⭐</div>
+        <div class="subj-prev">Preview: "Your honest review helps other pet owners find us. It takes 60 seconds."</div>
+      </div>
+      <div class="email-copy">Hi {{first_name}},
+
+It's been about a week since your FurAway™ arrived — long enough to have had a proper go at the sofa, the car, or that jumper you'd given up on.
+
+<strong>We'd love to hear how it's going.</strong>
+
+Honest reviews from real UK pet owners are how other people like you find us. If you've got 60 seconds, we'd be grateful for yours:
+
+→ [LEAVE A REVIEW — takes 60 seconds]
+
+<strong>Know someone who could use this?</strong>
+
+If you've recommended it to a friend already (we get a lot of this), here's something a bit more official:
+
+Share your unique referral link and when they order, they get 10% off — and so do you.
+
+→ [GET MY REFERRAL LINK]
+
+Either way — thank you for choosing FurAway™. We genuinely hope it's made the fur situation at home a little bit better.
+
+Warm regards,
+The FurAway™ Team 🐾
+
+P.S. If anything wasn't right with your order, please just reply to this email and we'll sort it out straight away.</div>
+    </div>
+  </div>
+
+  <!-- EMAIL 4 — RE-ORDER / BUNDLE PUSH -->
+  <div class="email-card">
+    <div class="email-card-header">
+      <div class="ec-badge ecb-4">🔄</div>
+      <div>
+        <div class="ec-title">Email 4 — Re-Order / Gift Prompt</div>
+        <div class="ec-tags">
+          <span class="ec-tag ect-timing">⏱ 30 days after purchase</span>
+          <span class="ec-tag ect-goal">🎯 LTV · Gift purchases · Second order</span>
+        </div>
+      </div>
+    </div>
+    <div class="email-card-body">
+      <div class="subj-box">
+        <div class="subj-label">Subject Line</div>
+        <div class="subj-line">Know any other pet owners? 🐾 (They'll thank you for this)</div>
+        <div class="subj-prev">Preview: "FurAway™ makes a genuinely useful gift for anyone with a cat or dog."</div>
+      </div>
+      <div class="email-copy">Hi {{first_name}},
+
+Hope your sofa has been thoroughly reclaimed since your FurAway™ arrived.
+
+We wanted to mention — if you've got a friend, family member, or colleague who's been complaining about pet hair (you know the type), FurAway™ makes a genuinely useful gift. Not the kind that ends up in a drawer — the kind they actually use every week.
+
+We offer free UK delivery on orders over £30, and our Buy 2 Get 1 Free bundle means you could grab one for a friend and still save money.
+
+→ [SHOP FURAWAY™ BUNDLES]
+
+And if you ever need a spare for the car, the bedroom, or the in-laws' place — same link, same guarantee.
+
+Thanks again for being a FurAway™ customer, {{first_name}}. You lot are the reason we exist.
+
+The FurAway™ Team 🐾</div>
+    </div>
+  </div>
+
+</div>
+
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- REFERRAL PROGRAMME                              -->
+<!-- ═══════════════════════════════════════════════ -->
+<div class="section-label">Referral Programme Design</div>
+
+<div class="referral-box">
+  <h2>🐾 The FurAway™ Refer-a-Friend Programme</h2>
+  <p>Word of mouth is the best marketing a DTC brand can have. Structure it properly and it compounds. Here's the recommended setup:</p>
+  <div class="referral-grid">
+    <div class="ref-card">
+      <div class="ref-icon">🎁</div>
+      <div class="ref-title">For the Referrer</div>
+      <div class="ref-desc">£5 store credit or 10% off their next order, issued automatically when their friend places an order. Simple, trackable, frictionless.</div>
+    </div>
+    <div class="ref-card">
+      <div class="ref-icon">🏷️</div>
+      <div class="ref-title">For the New Customer</div>
+      <div class="ref-desc">10% off their first order via unique referral link. Strong incentive to actually use the link rather than just visiting directly.</div>
+    </div>
+    <div class="ref-card">
+      <div class="ref-icon">📱</div>
+      <div class="ref-title">Trigger Points</div>
+      <div class="ref-desc">Introduce in: Thank You Page share buttons, Review Request email (Day 7), and a dedicated referral page linked from the footer.</div>
+    </div>
+    <div class="ref-card">
+      <div class="ref-icon">⚙️</div>
+      <div class="ref-title">Recommended Tool</div>
+      <div class="ref-desc">ReferralCandy, Smile.io, or LoyaltyLion all integrate with Shopify. Set up takes under 2 hours. Minimal ongoing cost relative to CAC savings.</div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- STRATEGY NOTES                                  -->
+<!-- ═══════════════════════════════════════════════ -->
+<div class="section-label">Strategy & CRO Notes</div>
+
+<div class="notes-grid">
+  <div class="note-card">
+    <h3>🎯 OTO Conversion Tips</h3>
+    <ul>
+      <li>The car upsell works because it's a genuinely different use case — not just "buy more of the same"</li>
+      <li>Decline button copy: "No thanks — I don't need it for the car" — makes declining feel like a concession, not just a button press</li>
+      <li>Timer is real — set to 15 minutes in Shopify post-purchase. Creates urgency without dishonesty</li>
+      <li>Target AOV lift: £11.99 add-on on a £34.99 order = 34% AOV increase on converting customers</li>
+      <li>Test a second OTO: a set of microfibre cloths or a pet hair travel kit at £8.99</li>
+    </ul>
+  </div>
+  <div class="note-card">
+    <h3>📧 Email Flow Metrics</h3>
+    <ul>
+      <li>Confirmation email (Email 1): target 65–75% open rate — transactional emails have the highest open rate of any sequence</li>
+      <li>Dispatch email (Email 2): target 55–65% open rate — customers are actively waiting for their order</li>
+      <li>Review request (Email 3): target 35–45% open rate · 8–15% click rate · 20–30% review completion</li>
+      <li>Re-order email (Email 4): target 25–35% open rate · 4–8% click rate</li>
+      <li>All four emails should be set as "transactional" in Klaviyo to bypass marketing unsubscribes</li>
+    </ul>
+  </div>
+  <div class="note-card">
+    <h3>🛠 Shopify Implementation</h3>
+    <ul>
+      <li>Thank You Page customisation: use ReConvert or Zipify Pages for full post-purchase page control</li>
+      <li>OTO (post-purchase upsell): AfterSell or Zipify OCU — both integrate natively with Shopify checkout</li>
+      <li>Email flow: Klaviyo — create a "Fulfilled Order" flow for dispatch email, "Placed Order" for confirmation</li>
+      <li>Review collection: Judge.me or Okendo — both auto-trigger review request emails on schedule</li>
+      <li>Referral: ReferralCandy or Smile.io — embed referral widget into Thank You Page</li>
+    </ul>
+  </div>
+  <div class="note-card">
+    <h3>💰 Revenue Impact Estimates</h3>
+    <ul>
+      <li>OTO conversion rate (cold traffic): typically 8–18% of buyers accept a post-purchase upsell</li>
+      <li>At 12% OTO uptake on 100 orders/month: +£143.88 additional revenue, zero extra ad spend</li>
+      <li>Review emails generating 25 reviews/month compound into significantly lower CAC over time (social proof flywheel)</li>
+      <li>Referral programme at 5% referral rate: every 20 customers generates 1 new customer for near-zero cost</li>
+      <li>Combined: post-purchase sequence can add 15–25% to total monthly revenue with no additional ad spend</li>
+    </ul>
+  </div>
+</div>
+
+</div>
+
+<script>
+  // Real countdown timer for OTO
+  let total = 14 * 60 + 59;
+  const minsEl = document.getElementById('mins');
+  const secsEl = document.getElementById('secs');
+  const tick = setInterval(() => {
+    if (total <= 0) { clearInterval(tick); return; }
+    total--;
+    const m = Math.floor(total / 60);
+    const s = total % 60;
+    minsEl.textContent = String(m).padStart(2, '0');
+    secsEl.textContent = String(s).padStart(2, '0');
+  }, 1000);
+</script>
+
+</body>
+</html>
