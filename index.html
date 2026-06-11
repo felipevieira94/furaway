@@ -29,7 +29,11 @@
 
   /* ─── RESET ──────────────────────────────────────────────── */
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; }
+  html {
+    scroll-behavior: smooth;
+    width: 100%;
+    overflow-x: hidden;
+  }
   body {
     font-family: var(--font-body);
     color: var(--ink);
@@ -37,6 +41,10 @@
     line-height: 1.65;
     font-size: 16px;
     -webkit-font-smoothing: antialiased;
+    width: 100%;
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
   }
   img { max-width: 100%; display: block; }
   a { color: inherit; text-decoration: none; }
@@ -814,11 +822,9 @@
       <span class="btn-note">⭐ 4.9/5 from 2,400+ reviews · Free Returns</span>
     </div>
 
-    <!-- HERO IMAGE PLACEHOLDER -->
-    <div class="hero-img img-placeholder">
-      <span class="icon">📸</span>
-      <strong>Hero Lifestyle Image</strong>
-      <span>Person using FurAway™ on sofa, golden light, clean home, happy dog nearby<br/>Recommended: 800×600px WebP, lifestyle photography</span>
+    <!-- HERO IMAGE -->
+    <div class="hero-img" style="overflow:hidden;">
+      <img src="https://static.wixstatic.com/media/e635a4_8b6c19029d4b45a6bb05377a2f06d317~mv2.webp" alt="Woman relaxing on clean sofa with golden retriever — FurAway™" style="width:100%;height:100%;object-fit:cover;" />
     </div>
 
     <!-- TRUST BADGES -->
@@ -901,11 +907,9 @@
 <section>
   <div class="container">
     <div class="product-intro-layout">
-      <!-- PRODUCT IMAGE PLACEHOLDER -->
-      <div class="product-img-block img-placeholder">
-        <span class="icon">📸</span>
-        <strong>Product Hero Shot</strong>
-        <span>FurAway™ held in hand or mid-use on fabric<br/>Clean white/sage background, premium feel<br/>Recommended: 600×680px WebP</span>
+      <!-- PRODUCT IMAGE -->
+      <div class="product-img-block" style="overflow:hidden;">
+        <img src="https://static.wixstatic.com/media/e635a4_1440947f5a5a40f6b60e4218870c13c7~mv2.webp" alt="FurAway™ pet hair remover product shot" style="width:100%;height:100%;object-fit:cover;" />
       </div>
 
       <div class="product-intro-copy">
@@ -1117,10 +1121,8 @@
     </p>
 
     <!-- GIF PLACEHOLDER -->
-    <div class="img-placeholder" style="height:200px;border-radius:var(--radius-lg);margin-bottom:36px;">
-      <span class="icon">🎬</span>
-      <strong>Animated GIF / Short Video Clip</strong>
-      <span>3–5 second looping GIF showing the product in use on a sofa<br/>High-contrast fur lift visible — satisfying to watch</span>
+    <div style="height:200px;border-radius:var(--radius-lg);margin-bottom:36px;overflow:hidden;">
+      <img src="https://static.wixstatic.com/media/e635a4_10015ac5b3ed48e39ee0f049d567f2cd~mv2.webp" alt="FurAway™ in use — pet hair being removed from sofa" style="width:100%;height:100%;object-fit:cover;" />
     </div>
 
     <div class="steps">
@@ -1524,10 +1526,8 @@
     </div>
 
     <!-- FINAL LIFESTYLE IMAGE -->
-    <div class="img-placeholder" style="height:280px;border-radius:var(--radius-lg);margin-top:36px;">
-      <span class="icon">📸</span>
-      <strong>Final Lifestyle Image</strong>
-      <span>Happy pet owner relaxed on fur-free sofa, pet beside them<br/>Warm, cosy, aspirational — the "after" state</span>
+    <div style="height:280px;border-radius:var(--radius-lg);margin-top:36px;overflow:hidden;">
+      <img src="https://static.wixstatic.com/media/e635a4_fea511d2d2b2457ca3e9d983e2ea5949~mv2.webp" alt="Happy pet owner relaxing on clean sofa with cat — FurAway™" style="width:100%;height:100%;object-fit:cover;" />
     </div>
   </div>
 </section>
@@ -1567,6 +1567,19 @@
     stickyCta.style.display = entry.isIntersecting ? 'none' : 'flex';
   }, { threshold: 0 });
   observer.observe(hero);
+
+  // ── AUTO-HEIGHT FOR WIX IFRAME ──────────────────────────────
+  // Sends the full page height to the parent Wix iframe
+  // so the embed box never clips the content on any screen size.
+  function sendHeight() {
+    const height = document.documentElement.scrollHeight;
+    window.parent.postMessage({ type: 'iwh', value: height }, '*');
+  }
+  // Fire on load and whenever the DOM changes (images loading, etc.)
+  window.addEventListener('load', sendHeight);
+  window.addEventListener('resize', sendHeight);
+  const ro = new ResizeObserver(sendHeight);
+  ro.observe(document.body);
 </script>
 
 </body>
